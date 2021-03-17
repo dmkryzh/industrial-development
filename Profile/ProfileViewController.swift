@@ -3,7 +3,6 @@
 //  Navigation
 //
 //  Created by Дмитрий on 21.12.2020.
-//  Copyright © 2020 Artem Novichkov. All rights reserved.
 //
 
 import UIKit
@@ -24,8 +23,8 @@ class ProfileViewController: UIViewController {
     
     lazy var cross: UIImageView = {
         let cross = UIImageView()
-        let crossConfig = UIImage.SymbolConfiguration(textStyle: .largeTitle)
-        cross.image = UIImage(systemName: "xmark", withConfiguration: crossConfig)
+        //let crossConfig = UIImage.SymbolConfiguration(textStyle: .largeTitle)
+        cross.image = UIImage(named: "cross")
         cross.alpha = 0
         cross.tintColor = .white
         cross.isUserInteractionEnabled = true
@@ -59,11 +58,17 @@ class ProfileViewController: UIViewController {
     
     lazy var avaGesture = UITapGestureRecognizer(target: self, action: #selector(avaTap))
     
+    lazy var transparentView: UIView = {
+        let view = UIView()
+        view.alpha = 0
+        view.toAutoLayout()
+        return view
+    }()
+    
     
     //MARK: Обработка нажатия
     
     @objc func avaTap() {
-        print("tap")
         self.someState.toggle()
         
         let animationIn = UIViewPropertyAnimator(duration: 1, curve: .easeInOut) {
@@ -98,6 +103,11 @@ class ProfileViewController: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         
+        transparentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        transparentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        transparentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+        transparentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        
     ]
     
     
@@ -106,7 +116,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        view.addSubviews(tableView, ava, cross)
+        view.addSubviews(tableView, ava, transparentView, cross)
         self.cross.addGestureRecognizer(avaGesture)
         NSLayoutConstraint.activate(constraints)
         center = self.ava.center

@@ -3,7 +3,6 @@
 //  Navigation
 //
 //  Created by Дмитрий on 21.01.2021.
-//  Copyright © 2021 Artem Novichkov. All rights reserved.
 //
 
 import UIKit
