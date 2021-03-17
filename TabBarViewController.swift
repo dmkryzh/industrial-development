@@ -2,7 +2,7 @@
 //  TabBarViewController.swift
 //  Navigation
 //
-//  Created by Dmitrii KRY on 11.03.2021.
+//  Created by Dmitrii KRY on 16.03.2021.
 //
 
 import UIKit
@@ -46,7 +46,4 @@ class TabBarViewController: UITabBarController {
    
     }
 
-
 }
-
-// Коммент для pr. Все таски выполнены

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UIView {
     
@@ -98,6 +99,12 @@ class ProfileHeaderView: UIView {
         statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
         statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
     ]
+    
+    func setupConstraints() {
+        avaView.snp.makeConstraints() { make in
+            make.height.width.equalTo(100)
+        }
+    }
     
     @objc private func statusTextChanged(_ text: UITextField) {
         statusText = text.text!

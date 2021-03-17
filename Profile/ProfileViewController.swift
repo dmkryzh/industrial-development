@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileViewController: UIViewController {
     
@@ -23,8 +24,8 @@ class ProfileViewController: UIViewController {
     
     lazy var cross: UIImageView = {
         let cross = UIImageView()
-        //let crossConfig = UIImage.SymbolConfiguration(textStyle: .largeTitle)
-        cross.image = UIImage(named: "cross")
+        let crossConfig = UIImage.SymbolConfiguration(textStyle: .largeTitle)
+        cross.image = UIImage(systemName: "xmark", withConfiguration: crossConfig)
         cross.alpha = 0
         cross.tintColor = .white
         cross.isUserInteractionEnabled = true
@@ -58,17 +59,11 @@ class ProfileViewController: UIViewController {
     
     lazy var avaGesture = UITapGestureRecognizer(target: self, action: #selector(avaTap))
     
-    lazy var transparentView: UIView = {
-        let view = UIView()
-        view.alpha = 0
-        view.toAutoLayout()
-        return view
-    }()
-    
     
     //MARK: Обработка нажатия
     
     @objc func avaTap() {
+        print("tap")
         self.someState.toggle()
         
         let animationIn = UIViewPropertyAnimator(duration: 1, curve: .easeInOut) {
@@ -97,28 +92,29 @@ class ProfileViewController: UIViewController {
         
     }
     
-    lazy var constraints = [
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-        
-        transparentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-        transparentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        transparentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-        transparentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-        
-    ]
+//    lazy var constraints = [
+//        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+//        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+//        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+//
+//    ]
     
+    func setupConstraints() {
+        tableView.snp.makeConstraints() { make in
+            make.top.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
     
     //MARK: LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        view.addSubviews(tableView, ava, transparentView, cross)
+        view.addSubviews(tableView, ava, cross)
         self.cross.addGestureRecognizer(avaGesture)
-        NSLayoutConstraint.activate(constraints)
+        setupConstraints()
+        //NSLayoutConstraint.activate(constraints)
         center = self.ava.center
         
     }

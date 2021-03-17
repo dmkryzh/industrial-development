@@ -89,7 +89,7 @@ class LogInViewController: UIViewController {
         stackLogPas.layer.cornerRadius = 10
         stackLogPas.layer.borderWidth = 0.5
         stackLogPas.layer.masksToBounds = true
-        stackLogPas.backgroundColor = .systemGray
+        stackLogPas.backgroundColor = .systemGray6
         stackLogPas.spacing = 0
         stackLogPas.toAutoLayout()
         return stackLogPas

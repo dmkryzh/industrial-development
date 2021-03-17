@@ -9,13 +9,14 @@ import UIKit
 
 class PostViewController: UIViewController {
     
-    var post: Post?  {
+    var post: Post? {
         didSet {
             title = post?.title
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .orange
     }
 }
