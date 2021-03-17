@@ -3,7 +3,6 @@
 //  Navigation
 //
 //  Created by Дмитрий on 24.01.2021.
-//  Copyright © 2021 Artem Novichkov. All rights reserved.
 //
 
 import UIKit
@@ -20,11 +19,11 @@ class PhotosHighlightsView: UIView {
     }()
     
     let arrow: UIImageView = {
-        let arrowConfig = UIImage.SymbolConfiguration(textStyle: .title3)
+        //let arrowConfig = UIImage.SymbolConfiguration(textStyle: .title3)
         let arrow = UIImageView()
         arrow.toAutoLayout()
         arrow.tintColor = .black
-        arrow.image = UIImage(systemName: "arrow.forward", withConfiguration: arrowConfig)
+        //arrow.image = UIImage(systemName: "arrow.forward", withConfiguration: arrowConfig)
         return arrow
     }()
     
@@ -60,8 +59,8 @@ class PhotosHighlightsView: UIView {
         viewStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         viewStack.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         viewStack.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.25, constant: -(8 * 3 + 12 * 2) / 4)
-        ]
-        
+    ]
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews(title, arrow, viewStack)

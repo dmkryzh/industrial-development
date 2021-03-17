@@ -1,9 +1,7 @@
 //
 //  PhotosViewController.swift
 //  Navigation
-//
 //  Created by Дмитрий on 24.01.2021.
-//  Copyright © 2021 Artem Novichkov. All rights reserved.
 //
 
 import UIKit
@@ -72,10 +70,10 @@ extension PhotosViewController: UICollectionViewDataSource {
 }
 
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let width: CGFloat = (collectionView.bounds.width - 8 * 4) / 3
-            return CGSize(width: width, height: width)
+        let width: CGFloat = (collectionView.bounds.width - 8 * 4) / 3
+        return CGSize(width: width, height: width)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -87,10 +85,10 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-   
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
+        
     }
 }
