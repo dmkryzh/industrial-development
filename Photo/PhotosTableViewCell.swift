@@ -7,26 +7,22 @@
 
 import UIKit
 import SnapKit
-import iOSIntPackage
 
 class PhotosTableViewCell: UITableViewCell {
     
     var photosHighlights = PhotosHighlightsView()
-
-    lazy var newConstraints = [
-        photosHighlights.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-        photosHighlights.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-        photosHighlights.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-        photosHighlights.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)
-    ]
+    
+    func setupConstraints() {
+        photosHighlights.snp.makeConstraints() { make in
+            make.top.leading.bottom.trailing.equalTo(contentView).inset(12)
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .white
         contentView.addSubview(photosHighlights)
-        photosHighlights.toAutoLayout()
-        NSLayoutConstraint.activate(newConstraints)
-        
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {

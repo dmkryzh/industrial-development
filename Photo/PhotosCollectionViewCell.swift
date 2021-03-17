@@ -24,17 +24,16 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         return photo
     }()
     
-    lazy var newConstraints = [
-        photo.topAnchor.constraint(equalTo: self.topAnchor),
-        photo.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-        photo.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-        photo.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-    ]
+    func setupConstraints() {
+        photo.snp.makeConstraints() { make in
+            make.top.leading.bottom.trailing.equalToSuperview()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(photo)
-        NSLayoutConstraint.activate(newConstraints)
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {

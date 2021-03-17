@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class PhotosHighlightsView: UIView {
     
@@ -46,25 +47,30 @@ class PhotosHighlightsView: UIView {
         return viewStack
     }()
     
-    lazy var newConstraints = [
+    func setupConstraints() {
+        title.snp.makeConstraints() { make in
+            make.top.equalTo(self.snp.top)
+            make.leading.equalTo(self.snp.leading)
+        }
         
-        title.topAnchor.constraint(equalTo: self.topAnchor),
-        title.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+        arrow.snp.makeConstraints() { make in
+            make.centerY.equalTo(title.snp.centerY)
+            make.trailing.equalTo(self.snp.trailing)
+        }
         
-        arrow.centerYAnchor.constraint(equalTo: title.centerYAnchor),
-        arrow.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        viewStack.snp.makeConstraints() { make in
+            make.height.equalTo(self.snp.width).multipliedBy(0.25).inset((8 * 3 + 12 * 2) / 4)
+            make.top.equalTo(title.snp.bottom).offset(12)
+            make.leading.bottom.trailing.equalTo(self)
+        }
         
-        viewStack.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 12),
-        viewStack.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-        viewStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-        viewStack.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-        viewStack.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.25, constant: -(8 * 3 + 12 * 2) / 4)
-        ]
+    }
         
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews(title, arrow, viewStack)
-        NSLayoutConstraint.activate(newConstraints)
+        setupConstraints()
+
     }
     
     required init?(coder: NSCoder) {

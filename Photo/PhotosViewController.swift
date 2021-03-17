@@ -25,18 +25,18 @@ class PhotosViewController: UIViewController {
         return collectionView
     }()
     
-    lazy var constraints = [
-        collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-        collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-        collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-    ]
+    func setupConstraints() {
+        collectionView.snp.makeConstraints() { make in
+            make.top.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
     
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(collectionView)
-        NSLayoutConstraint.activate(constraints)
+        setupConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -71,38 +71,42 @@ class ProfileHeaderView: UIView {
         statusButton.toAutoLayout()
         return statusButton
     }()
-    
-    lazy var initConstraints = [
-        avaView.heightAnchor.constraint(equalToConstant: 100),
-        avaView.widthAnchor.constraint(equalToConstant: 100),
-        avaView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-        avaView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-        
-        nameLabel.heightAnchor.constraint(equalToConstant: 20),
-        nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
-        nameLabel.leadingAnchor.constraint(equalTo: avaView.trailingAnchor, constant: 24),
-        nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-        
-        statusLabel.heightAnchor.constraint(equalToConstant: 20),
-        statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 24),
-        statusLabel.leadingAnchor.constraint(equalTo: avaView.trailingAnchor, constant: 24),
-        statusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-        
-        statusTextField.heightAnchor.constraint(equalToConstant: 40),
-        statusTextField.leadingAnchor.constraint(equalTo: avaView.trailingAnchor, constant: 24),
-        statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10),
-        statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-        
-        statusButton.heightAnchor.constraint(equalToConstant: 50),
-        statusButton.topAnchor.constraint(equalTo: avaView.bottomAnchor, constant: 50),
-        statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-        statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
-        statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-    ]
-    
+
+    //MARK: Constraints
     func setupConstraints() {
         avaView.snp.makeConstraints() { make in
             make.height.width.equalTo(100)
+            make.top.equalTo(self.snp.top).offset(16)
+            make.leading.equalTo(self.snp.leading).offset(16)
+        }
+        
+        nameLabel.snp.makeConstraints() { make in
+            make.height.equalTo(20)
+            make.top.equalTo(self.snp.top).offset(27)
+            make.leading.equalTo(avaView.snp.trailing).offset(24)
+            make.trailing.equalTo(self.snp.trailing).inset(16)
+        }
+        
+        statusLabel.snp.makeConstraints() { make in
+            make.height.equalTo(20)
+            make.top.equalTo(nameLabel.snp.top).offset(27)
+            make.leading.equalTo(avaView.snp.trailing).offset(24)
+            make.trailing.equalTo(self.snp.trailing).inset(16)
+        }
+        
+        statusTextField.snp.makeConstraints() { make in
+            make.height.equalTo(40)
+            make.top.equalTo(avaView.snp.bottom).inset(24)
+            make.leading.equalTo(avaView.snp.trailing).offset(24)
+            make.trailing.equalTo(self.snp.trailing).inset(16)
+        }
+        
+        statusButton.snp.makeConstraints() { make in
+            make.height.equalTo(50)
+            make.top.equalTo(avaView.snp.bottom).offset(50)
+            make.leading.equalTo(self.snp.leading).offset(16)
+            make.bottom.equalTo(self.snp.bottom).inset(16)
+            make.trailing.equalTo(self.snp.trailing).inset(16)
         }
     }
     
@@ -116,14 +120,13 @@ class ProfileHeaderView: UIView {
         statusTextField.text = nil
         print("\(statusText)")
     }
-    
-    
+   
+    //MARK: init
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .lightGray
         addSubviews(avaView, nameLabel, statusLabel, statusTextField, statusButton)
-        NSLayoutConstraint.activate(initConstraints)
-        
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
