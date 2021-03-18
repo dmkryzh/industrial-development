@@ -28,9 +28,6 @@ class TabBarViewController: UITabBarController {
         }()
         
         feedNav.tabBarItem = itemFeed
-                
-        let profile = ProfileViewController()
-        let profileNav = UINavigationController(rootViewController: profile)
         
         let itemProfile: UITabBarItem = {
             let itemProfile = UITabBarItem()
@@ -39,10 +36,13 @@ class TabBarViewController: UITabBarController {
             itemProfile.tag = 1
             return itemProfile
         }()
-
-        profileNav.tabBarItem = itemProfile
         
-        viewControllers = [feedNav, profileNav]
+        let login = LogInViewController()
+        let loginNav = UINavigationController(rootViewController: login)
+
+        loginNav.tabBarItem = itemProfile
+        
+        viewControllers = [feedNav, loginNav]
    
     }
 

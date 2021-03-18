@@ -126,16 +126,9 @@ class LogInViewController: UIViewController {
         logInButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
     ]
     
-    //    @objc func navigateTo() {
-    //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //        guard let profileViewController = storyboard.instantiateViewController(identifier: "ProfileViewController") as? ProfileViewController else { return }
-    //        show(profileViewController, sender: nil)
-    //    }
-    
     @objc func navigateTo() {
         let profileViewController = ProfileViewController()
         self.show(profileViewController, sender: nil)
-        //navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     
