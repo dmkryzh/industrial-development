@@ -10,9 +10,8 @@ import UIKit
 import SnapKit
 
 protocol FeedViewOutput {
-    func showPost()
+    func showPost(_:Post)
     var navigationController: UINavigationController? { get set }
-    var postName: Post? { get set }
 }
 
 class FeedViewController: UIViewController {
@@ -23,7 +22,7 @@ class FeedViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let container = ContainerView()
-        container.onTap = output?.showPost
+        container.onTap = output?.showPost(_:)
         return container
     }()
     
@@ -38,7 +37,6 @@ class FeedViewController: UIViewController {
         view.backgroundColor = .systemGreen
         output = PostPresenter()
         output?.navigationController = navigationController
-        output?.postName = post
         view.addSubview(containerView)
         setupConstraints()
         print(type(of: self), #function)
@@ -48,9 +46,12 @@ class FeedViewController: UIViewController {
 }
 
 //MARK: ContainerView
+
 class ContainerView: UIView {
     
-    var onTap: (() -> Void)?
+    let post: Post = Post(title: "Пост", author: nil, description: nil, imageName: nil, likes: nil, views: nil)
+    
+    var onTap: ((Post) -> Void)?
     
     let newButton: UIButton = {
         let button = UIButton(type: .system)
@@ -86,21 +87,23 @@ class ContainerView: UIView {
         return buttonsStack
     }()
     
-    lazy var newConstraints = [
-        buttonsStack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
-        buttonsStack.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
-        buttonsStack.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-    ]
+    func newConstraints() {
+        buttonsStack.snp.makeConstraints() { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().inset(16)
+            make.centerY.equalToSuperview()
+        }
+    }
     
     @objc private func navigationTo() {
         guard onTap != nil else { return }
-        onTap!()
+        onTap!(post)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(buttonsStack)
-        NSLayoutConstraint.activate(newConstraints)
+        newConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -112,13 +115,13 @@ class ContainerView: UIView {
 //MARK: PostPresenter
 class PostPresenter: FeedViewOutput {
     
-    func showPost() {
+    func showPost(_ post: Post) {
         let postViewController = PostViewController()
-        postViewController.post = postName
+        postViewController.post = post
         navigationController?.pushViewController(postViewController, animated: true)
     }
     
     var navigationController: UINavigationController?
-    var postName: Post?
+
 }
 
