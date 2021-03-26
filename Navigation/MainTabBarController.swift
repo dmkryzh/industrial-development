@@ -13,10 +13,11 @@ class MainTabBarController: UITabBarController {
 
     let feed = FeedCoordinator()
     let profile = ProfileCoordinator()
+    let login = LoginCoordinator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewControllers = [feed.navController!, profile.navController!]
+        viewControllers = [feed.navController!, login.navController!]
 
     }
 

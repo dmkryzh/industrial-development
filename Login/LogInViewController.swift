@@ -102,8 +102,8 @@ class LogInViewController: UIViewController {
         }
         
         containerView.snp.makeConstraints() { make in
-            make.top.leading.bottom.trailing.equalTo(scrollView)
-            make.width.equalTo(view.safeAreaLayoutGuide.snp.width)
+            make.top.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.width.equalTo(scrollView.snp.width)
         }
         
         logo.snp.makeConstraints() { make in

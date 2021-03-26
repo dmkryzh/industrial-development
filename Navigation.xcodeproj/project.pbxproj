@@ -20,6 +20,8 @@
 		505EDD4026092B4900319C7A /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD3F26092B4900319C7A /* MainCoordinator.swift */; };
 		505EDD4326092BC300319C7A /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD4226092BC300319C7A /* FeedCoordinator.swift */; };
 		505EDD4626092C0100319C7A /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD4526092C0100319C7A /* ProfileCoordinator.swift */; };
+		505EDD4D260A834B00319C7A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD4C260A834B00319C7A /* ProfileViewModel.swift */; };
+		505EDD56260E48BA00319C7A /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD55260E48BA00319C7A /* LoginCoordinator.swift */; };
 		96A4A83F6B80C59A83237DDA /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71452D49513A071150B40130 /* Pods_Navigation.framework */; };
 		E225171A25BDEC3200936CA5 /* PhotosHighlightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225171925BDEC3200936CA5 /* PhotosHighlightsView.swift */; };
 		E24BCFEA25B77B08006F7711 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24BCFE925B77B08006F7711 /* PostTableViewCell.swift */; };
@@ -48,6 +50,8 @@
 		505EDD3F26092B4900319C7A /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		505EDD4226092BC300319C7A /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
 		505EDD4526092C0100319C7A /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		505EDD4C260A834B00319C7A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		505EDD55260E48BA00319C7A /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		54B96D5774A4F3DE4ADFC0C4 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
 		71452D49513A071150B40130 /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B11811169888747107DDA3F2 /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				505EDD4526092C0100319C7A /* ProfileCoordinator.swift */,
 				505EDD4226092BC300319C7A /* FeedCoordinator.swift */,
 				505EDD3C26091DAC00319C7A /* Coordinator.swift */,
+				505EDD55260E48BA00319C7A /* LoginCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 			children = (
 				E25558282590EA54007CDBFF /* ProfileViewController.swift */,
 				E27CC2DB25B9EFBF008C4C11 /* ProfileHeaderView.swift */,
+				505EDD4C260A834B00319C7A /* ProfileViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -297,8 +303,10 @@
 				505EDD4626092C0100319C7A /* ProfileCoordinator.swift in Sources */,
 				E27CC2DC25B9EFBF008C4C11 /* ProfileHeaderView.swift in Sources */,
 				060782B6250CE27700A87020 /* FeedViewController.swift in Sources */,
+				505EDD56260E48BA00319C7A /* LoginCoordinator.swift in Sources */,
 				060782B2250CE27700A87020 /* AppDelegate.swift in Sources */,
 				E2AAF97325BDBA4500A30723 /* Photos.swift in Sources */,
+				505EDD4D260A834B00319C7A /* ProfileViewModel.swift in Sources */,
 				E25052AD25B33F4700201617 /* LogInViewController.swift in Sources */,
 				060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */,
 				060782CA250CEE7200A87020 /* Post.swift in Sources */,
