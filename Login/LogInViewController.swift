@@ -130,12 +130,12 @@ class LogInViewController: UIViewController {
     
     func setupConstraints() {
         scrollView.snp.makeConstraints() { make in
-            make.top.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         containerView.snp.makeConstraints() { make in
-            make.top.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.width.equalTo(scrollView.snp.width)
+            make.edges.equalTo(scrollView)
+            make.width.equalTo(view.safeAreaLayoutGuide)
         }
         
         logo.snp.makeConstraints() { make in
@@ -163,12 +163,13 @@ class LogInViewController: UIViewController {
             make.height.equalTo(50)
             make.leading.equalTo(containerView.snp.leading).offset(16)
             make.trailing.equalTo(containerView.snp.trailing).inset(16)
+            make.bottom.equalTo(containerView.snp.bottom)
         }
     }
     
     let dispatchGroup = DispatchGroup()
     
-    let dispatchQueueBacground = DispatchQueue(label: "bacground", qos: .background, attributes: .concurrent)
+    let dispatchQueueBacground = DispatchQueue(label: "background", qos: .background, attributes: .concurrent)
     
     //MARK: Functions
     
