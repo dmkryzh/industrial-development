@@ -11,6 +11,7 @@ import SnapKit
 
 protocol FeedViewOutput {
     func showPost(_:Post)
+    func showPlayer()
     var navigationController: UINavigationController? { get set }
 }
 
@@ -21,6 +22,7 @@ class FeedViewController: UIViewController {
     lazy var containerView: UIView = {
         let container = ContainerView()
         container.onTap = output?.showPost(_:)
+        container.testOnTap = output?.showPlayer
         return container
     }()
     
@@ -40,7 +42,7 @@ class FeedViewController: UIViewController {
         print(type(of: self), #function)
         
     }
-
+    
 }
 
 //MARK: ContainerView
@@ -50,6 +52,8 @@ class ContainerView: UIView {
     let post: Post = Post(title: "Пост", author: nil, description: nil, imageName: nil, likes: nil, views: nil)
     
     var onTap: ((Post) -> Void)?
+    
+    var testOnTap: (() -> Void)?
     
     let newButton: UIButton = {
         let button = UIButton(type: .system)
@@ -69,10 +73,20 @@ class ContainerView: UIView {
         return button
     }()
     
+    let thirdNewButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("music", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemPink
+        button.addTarget(self, action: #selector(navigationToPlayer), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var buttonsStack: UIStackView = {
         let buttonsStack = UIStackView()
         buttonsStack.addArrangedSubview(newButton)
         buttonsStack.addArrangedSubview(secondNewButton)
+        buttonsStack.addArrangedSubview(thirdNewButton)
         buttonsStack.alignment = .fill
         buttonsStack.distribution = .fillEqually
         buttonsStack.axis = .vertical
@@ -93,6 +107,11 @@ class ContainerView: UIView {
     @objc private func navigationTo() {
         guard onTap != nil else { return }
         onTap!(post)
+    }
+    
+    @objc private func navigationToPlayer() {
+        guard testOnTap != nil else { return }
+        testOnTap!()
     }
     
     override init(frame: CGRect) {
@@ -116,7 +135,12 @@ class PostPresenter: FeedViewOutput {
         navigationController?.pushViewController(postViewController, animated: true)
     }
     
+    func showPlayer() {
+        let playerView = MusicViewController()
+        navigationController?.pushViewController(playerView, animated: true)
+    }
+    
     var navigationController: UINavigationController?
-
+    
 }
 
