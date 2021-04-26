@@ -136,7 +136,7 @@ class ProfileHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .lightGray
-        addSubviews(avaContainer, avaView, nameLabel, statusLabel, statusTextField, statusButton, grayView, avaView)
+        addSubviews(avaContainer, avaView, nameLabel, statusLabel, statusTextField, statusButton, grayView)
         setupConstraints()
     }
     

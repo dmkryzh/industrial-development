@@ -23,6 +23,7 @@
 		505EDD4D260A834B00319C7A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD4C260A834B00319C7A /* ProfileViewModel.swift */; };
 		505EDD56260E48BA00319C7A /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD55260E48BA00319C7A /* LoginCoordinator.swift */; };
 		505EDD59260E78C400319C7A /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD58260E78C400319C7A /* BrutForce.swift */; };
+		5079DAE32636DE1D00136C52 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079DAE22636DE1D00136C52 /* AudioPlayer.swift */; };
 		50E780172628C53700F49E1B /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E780162628C53700F49E1B /* MusicViewController.swift */; };
 		50E7801F2628D82C00F49E1B /* Master.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50E7801E2628D82C00F49E1B /* Master.mp3 */; };
 		50E780222629B15900F49E1B /* Queen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50E780212629B15900F49E1B /* Queen.mp3 */; };
@@ -61,6 +62,7 @@
 		505EDD4C260A834B00319C7A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		505EDD55260E48BA00319C7A /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		505EDD58260E78C400319C7A /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
+		5079DAE22636DE1D00136C52 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		50E780162628C53700F49E1B /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		50E7801E2628D82C00F49E1B /* Master.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Master.mp3; path = ../../../../../../Downloads/Master.mp3; sourceTree = "<group>"; };
 		50E780212629B15900F49E1B /* Queen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Queen.mp3; path = "../../../../../10. Мультимедиа/AVFoundation_Audio/AVFoundation_Audio/Music/Queen.mp3"; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		50E780142628A42A00F49E1B /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				5079DAE22636DE1D00136C52 /* AudioPlayer.swift */,
 				50E780162628C53700F49E1B /* MusicViewController.swift */,
 				50E7802D2629E15700F49E1B /* WebView.swift */,
 				50E780152628C47200F49E1B /* Library */,
@@ -355,6 +358,7 @@
 				E25052AD25B33F4700201617 /* LogInViewController.swift in Sources */,
 				060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */,
 				060782CA250CEE7200A87020 /* Post.swift in Sources */,
+				5079DAE32636DE1D00136C52 /* AudioPlayer.swift in Sources */,
 				50E7802E2629E15700F49E1B /* WebView.swift in Sources */,
 				505EDD3D26091DAC00319C7A /* Coordinator.swift in Sources */,
 				50E780172628C53700F49E1B /* MusicViewController.swift in Sources */,

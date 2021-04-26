@@ -11,11 +11,7 @@ import AVFoundation
 
 class MusicViewController: UIViewController {
     
-    let songsList: Array<String> = ["Master", "Queen", "Electric", "Alpha", "Guano"]
-    let youTubeList: [String] = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ", "https://www.youtube.com/watch?v=HCfPhZQz2CE", "https://www.youtube.com/watch?v=L1Snj1Pt-Hs"]
-    var currentSongIndex = 0
-    
-    var audioPlayer: AVAudioPlayer!
+    let playerDelegate = AudioPlayer()
     
     lazy var tableYouTube: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
@@ -27,7 +23,7 @@ class MusicViewController: UIViewController {
     
     lazy var songLabel: UILabel = {
         let song = UILabel()
-        song.text = songsList[currentSongIndex]
+        song.text = playerDelegate.songsList[0]
         song.font = UIFont.systemFont(ofSize: 25)
         song.textAlignment = .center
         return song
@@ -79,23 +75,12 @@ class MusicViewController: UIViewController {
     }()
     
     lazy var stackViewPlayer: UIStackView = {
-        let stack = UIStackView()
-        stack.addArrangedSubview(playButton)
-        stack.addArrangedSubview(backButton)
-        stack.addArrangedSubview(pauseButton)
-        stack.addArrangedSubview(forwardButton)
-        stack.addArrangedSubview(stopButton)
+        let stack = UIStackView(arrangedSubviews: [playButton, backButton, pauseButton, forwardButton, stopButton])
         stack.axis = .horizontal
         stack.distribution = .equalCentering
         stack.spacing = 20
         return stack
     }()
-    
-    func prepareAudioPlayer() {
-        let url = Bundle.main.url(forResource: songsList[currentSongIndex], withExtension: "mp3")!
-        audioPlayer = try! AVAudioPlayer(contentsOf: url)
-        audioPlayer.prepareToPlay()
-    }
     
     func setupConstraints() {
         
@@ -122,7 +107,6 @@ class MusicViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
         
-        
     }
     
     override func viewDidLoad() {
@@ -130,57 +114,34 @@ class MusicViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubviews(songLabel, stackViewPlayer, tableYouTube)
         setupConstraints()
-        prepareAudioPlayer()
+        playerDelegate.prepareAudioPlayer()
     }
     
     @objc func playButtonAction() {
-        if audioPlayer.isPlaying {
-            audioPlayer.pause()
-        }
-        else {
-            audioPlayer.play()
-        }
+        playerDelegate.playButtonAction()
     }
     
     @objc func stopButtonAction() {
-        audioPlayer.stop()
-        audioPlayer.currentTime = 0
+        playerDelegate.stopButtonAction()
     }
     
     @objc func pauseButtonAction() {
-        audioPlayer.pause()
+        playerDelegate.pauseButtonAction()
     }
     
     @objc func backButtonAction() {
-        if currentSongIndex == 0 {
-            currentSongIndex = songsList.count - 1
-        } else {
-            currentSongIndex -= 1
-        }
-        let url = Bundle.main.url(forResource: songsList[currentSongIndex], withExtension: "mp3")!
-        songLabel.text = songsList[currentSongIndex]
-        audioPlayer = try! AVAudioPlayer(contentsOf: url)
-        audioPlayer.prepareToPlay()
-        audioPlayer.play()
+        songLabel.text = playerDelegate.backButtonAction()
     }
     
     @objc func forwardButtonAction() {
-        if currentSongIndex == songsList.count - 1 {
-            currentSongIndex = 0
-        } else {
-            currentSongIndex += 1 % songsList.count
-        }
-        let url = Bundle.main.url(forResource: songsList[currentSongIndex], withExtension: "mp3")!
-        songLabel.text = songsList[currentSongIndex]
-        audioPlayer = try! AVAudioPlayer(contentsOf: url)
-        audioPlayer.prepareToPlay()
-        audioPlayer.play()
+        songLabel.text = playerDelegate.forwardButtonAction()
+        
     }
 }
 
 extension MusicViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let videoUrl = URL(string: youTubeList[indexPath.row])!
+        let videoUrl = URL(string: playerDelegate.youTubeList[indexPath.row])!
         let web = WebViewController()
         web.someUrl = videoUrl
         navigationController?.pushViewController(web, animated: true)
@@ -190,7 +151,7 @@ extension MusicViewController: UITableViewDelegate {
 
 extension MusicViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return youTubeList.count
+        return playerDelegate.youTubeList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

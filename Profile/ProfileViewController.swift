@@ -14,8 +14,6 @@ class ProfileViewController: UIViewController {
     
     var someState = true
     
-    var center: CGPoint?
-    
     lazy var header: ProfileHeaderView = {
         let header = ProfileHeaderView()
         let gesture = UITapGestureRecognizer(target: self, action: #selector(avaTap))
@@ -50,16 +48,19 @@ class ProfileViewController: UIViewController {
     
     //MARK: Анимация
     
+    var avaPostition = UIView()
+    var grayBackground = UIView()
+    
     func animateCross(_ state: Bool, _ completion: ((Bool)->Void)? = nil) {
         if state {
-            UIView.animate(withDuration: 1.0, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.cross.alpha = 1
                 self.view.bringSubviewToFront(self.cross)
             },
             completion: completion)
             
         } else {
-            UIView.animate(withDuration: 1.0, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.cross.alpha = 0
             },
             completion: completion)
@@ -70,22 +71,30 @@ class ProfileViewController: UIViewController {
         
         guard someState else { return }
         
+        avaPostition = self.header.avaView
+        grayBackground = self.header.grayView
+        
         func animateAvaToCenterProfile() {
             
-            self.header.grayView.alpha = 0.5
+            grayBackground.alpha = 0.5
             
-            self.header.avaView.layer.cornerRadius = 0
+            avaPostition.layer.cornerRadius = 0
             
-            self.header.avaView.snp.remakeConstraints() { make in
+            avaPostition.snp.remakeConstraints() { make in
                 make.center.equalTo(self.view.safeAreaLayoutGuide.snp.center)
-                make.width.height.equalTo(self.view.safeAreaLayoutGuide.snp.width)
+                
+                if self.view.bounds.height > self.view.bounds.width {
+                    make.width.height.equalTo(self.view.safeAreaLayoutGuide.snp.width)
+                } else {
+                    make.width.height.equalTo(self.view.safeAreaLayoutGuide.snp.height)
+                }
             }
             
             self.view.layoutIfNeeded()
-            self.view.addSubviews(self.header.grayView, self.header.avaView)
+            self.view.addSubviews(grayBackground, avaPostition)
         }
         
-        UIView.animate(withDuration: 1.0, animations: animateAvaToCenterProfile) {
+        UIView.animate(withDuration: 0.5, animations: animateAvaToCenterProfile) {
             if $0 {
                 self.animateCross(true)
             }
@@ -98,30 +107,26 @@ class ProfileViewController: UIViewController {
     @objc func crossTap() {
         
         guard someState == false else { return }
-        
-        let grayBackgroundProfile = self.view.subviews[self.view.subviews.count - 3]
-        
-        let avaPositionProfile = self.view.subviews[self.view.subviews.count - 2]
-        
+ 
         func animateAvaToInitialSize() {
             
-            avaPositionProfile.layer.cornerRadius = 50
-            grayBackgroundProfile.alpha = 0
+            avaPostition.layer.cornerRadius = 50
+            grayBackground.alpha = 0
             
-            avaPositionProfile.snp.remakeConstraints() { make in
+            avaPostition.snp.remakeConstraints() { make in
                 make.height.width.equalTo(100)
                 make.center.equalTo(self.header.avaContainer.snp.center)
             }
             
             self.view.layoutIfNeeded()
-            self.header.addSubviews(grayBackgroundProfile, avaPositionProfile)
+            self.header.addSubviews(grayBackground, avaPostition)
         }
         
         animateCross(false) {
             if $0 {
-                UIView.animate(withDuration: 1.0, animations: animateAvaToInitialSize) {
+                UIView.animate(withDuration: 0.5, animations: animateAvaToInitialSize) {
                     if $0 {
-                        avaPositionProfile.snp.remakeConstraints() { make in
+                        self.avaPostition.snp.remakeConstraints() { make in
                             make.height.width.equalTo(100)
                             make.center.equalTo(self.header.avaContainer.snp.center)
                         }
@@ -137,7 +142,7 @@ class ProfileViewController: UIViewController {
     
     func setupConstraints() {
         tableView.snp.makeConstraints() { make in
-            make.top.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         cross.snp.makeConstraints() { make in
@@ -153,12 +158,28 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .lightGray
         view.addSubviews(tableView, cross)
         setupConstraints()
-        //center = self.ava.center
-        
+
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
+        if !someState {
+            
+            avaPostition.snp.remakeConstraints() { make in
+                make.center.equalTo(self.view.safeAreaLayoutGuide.snp.center)
+                if self.view.bounds.height > self.view.bounds.width {
+                    make.width.height.equalTo(self.view.safeAreaLayoutGuide.snp.width)
+                } else {
+                    make.width.height.equalTo(self.view.safeAreaLayoutGuide.snp.height)
+                }
+            }
+            
+            grayBackground.snp.remakeConstraints() { make in
+                make.edges.equalToSuperview()
+            }
+
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -170,7 +191,6 @@ class ProfileViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
     
 }
 
@@ -203,8 +223,6 @@ extension ProfileViewController: UITableViewDelegate {
         guard section == 0 else { return nil }
         return self.header
     }
-    
-    
     
 }
 
