@@ -10,7 +10,7 @@ import SnapKit
 
 class ProfileViewController: UIViewController {
     
-    weak var coordinator: Coordinator?
+    weak var coordinator: ProfileCoordinator?
     
     var someState = true
     

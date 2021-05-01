@@ -10,15 +10,18 @@ import UIKit
 
 class ProfileCoordinator: Coordinator {
     
-    var navController: UINavigationController?
-    var rootViewController: UIViewController
+    var childCoordinators: [Coordinator] = []
+    weak var parentCoordinator: LoginCoordinator?
+    var navController: UINavigationController
 
-    init() {
-        rootViewController = ProfileViewController()
-        rootViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "person"), tag: 1)
-        navController = UINavigationController(rootViewController: rootViewController)
+    init(navigation: UINavigationController) {
+        navController = navigation
     }
     
-    func start() {}
+    func start() {
+        let vc = ProfileViewController()
+        vc.coordinator = self
+        navController.setViewControllers([vc], animated: true)
+    }
 
 }

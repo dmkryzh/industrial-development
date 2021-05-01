@@ -10,23 +10,23 @@ import UIKit
 
 class LoginCoordinator: Coordinator {
     
-    var rootViewController: UIViewController
+    var childCoordinators: [Coordinator] = []
+    var navController: UINavigationController
     
-    var navController: UINavigationController?
-    
-    init() {
-        let vc = LogInViewController()
-        rootViewController = vc
-        rootViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "person"), tag: 1)
-        navController = UINavigationController(rootViewController: rootViewController)
-        vc.coordinator = self
+    init(navigation: UINavigationController) {
+        self.navController = navigation
     }
     
-    func start() {}
+    func start() {
+        let vc = LogInViewController()
+        vc.coordinator = self
+        navController.pushViewController(vc, animated: true)
+    }
     
-    func startFeed() {
-        let feed = ProfileViewController()
-        navController?.show(feed, sender: nil)
+    func startProfile() {
+        let profileCoordinator = ProfileCoordinator(navigation: navController)
+        childCoordinators.append(profileCoordinator)
+        profileCoordinator.start()
     }
     
     

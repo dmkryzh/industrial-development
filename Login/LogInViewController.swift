@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol LogInViewControllerDelegate: class {
+protocol LogInViewControllerDelegate: AnyObject {
     
     func validateLogin(_: String) -> Bool
     func validatePassword(_: String) -> Bool
@@ -198,7 +198,7 @@ class LogInViewController: UIViewController {
         do {
             let isOK = try loginCheck()
             if isOK {
-                coordinator?.startFeed()
+                coordinator?.startProfile()
             }
             
         } catch AppErrors.unauthenticated {

@@ -8,10 +8,9 @@
 import Foundation
 import UIKit
 
-protocol Coordinator: class {
+protocol Coordinator: AnyObject {
     
-    var rootViewController: UIViewController { get }
-    var navController: UINavigationController? { get }
+    var childCoordinators: [Coordinator] { get set }
     func start()
     
 }

@@ -9,18 +9,19 @@ import Foundation
 import UIKit
 
 class FeedCoordinator: Coordinator {
+    
+    var childCoordinators: [Coordinator] = []
+    var navController: UINavigationController
 
-    var navController: UINavigationController?
-    var rootViewController: UIViewController
+    init(navigation: UINavigationController) {
+        navController = navigation
 
-    init() throws {
-        rootViewController = FeedViewController()
-        rootViewController.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "house"), tag: 0)
-        navController = UINavigationController(rootViewController: rootViewController)
-        guard navController != nil else { throw AppErrors.internalError }
     }
     
     func start() {
+        let feed = FeedViewController()
+        feed.coordinator = self
+        navController.pushViewController(feed, animated: true)
     }
 
 }

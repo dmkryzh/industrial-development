@@ -17,6 +17,8 @@ protocol FeedViewOutput {
 
 class FeedViewController: UIViewController {
     
+    weak var coordinator: FeedCoordinator?
+    
     var output: FeedViewOutput?
     
     lazy var containerView: UIView = {

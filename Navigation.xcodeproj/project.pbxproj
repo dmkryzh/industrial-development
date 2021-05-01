@@ -100,13 +100,19 @@
 			isa = PBXGroup;
 			children = (
 				060782BA250CE27A00A87020 /* Assets.xcassets */,
+				060782BC250CE27A00A87020 /* LaunchScreen.storyboard */,
+				060782BF250CE27A00A87020 /* Info.plist */,
+				060782B1250CE27700A87020 /* AppDelegate.swift */,
+				060782B3250CE27700A87020 /* SceneDelegate.swift */,
+				505EDD2E2607DB2000319C7A /* MainTabBarController.swift */,
+				50BAA7C9263DDBBD0017F418 /* Info */,
+				50BAA7C8263DDBAB0017F418 /* Feed */,
 				50E780142628A42A00F49E1B /* Music */,
 				505EDD4826092C5600319C7A /* Coordinators */,
 				50336DA5260392EA00517DDC /* Login */,
 				E2AAF96725BDA5F200A30723 /* Photo */,
 				E24BCFEC25B8399A006F7711 /* Post */,
 				E25558242590E9D4007CDBFF /* Profile */,
-				060782B0250CE27700A87020 /* Navigation */,
 				060782AF250CE27700A87020 /* Products */,
 				80E69A97276420D387B01AB9 /* Pods */,
 				1919AF36745A09A93D87C4E0 /* Frameworks */,
@@ -119,20 +125,6 @@
 				060782AE250CE27700A87020 /* Navigation.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		060782B0250CE27700A87020 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				505EDD2E2607DB2000319C7A /* MainTabBarController.swift */,
-				060782B1250CE27700A87020 /* AppDelegate.swift */,
-				060782B3250CE27700A87020 /* SceneDelegate.swift */,
-				060782C5250CEB0A00A87020 /* InfoViewController.swift */,
-				060782B5250CE27700A87020 /* FeedViewController.swift */,
-				060782BC250CE27A00A87020 /* LaunchScreen.storyboard */,
-				060782BF250CE27A00A87020 /* Info.plist */,
-			);
-			path = Navigation;
 			sourceTree = "<group>";
 		};
 		1919AF36745A09A93D87C4E0 /* Frameworks */ = {
@@ -162,6 +154,22 @@
 				505EDD55260E48BA00319C7A /* LoginCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		50BAA7C8263DDBAB0017F418 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				060782B5250CE27700A87020 /* FeedViewController.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		50BAA7C9263DDBBD0017F418 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				060782C5250CEB0A00A87020 /* InfoViewController.swift */,
+			);
+			path = Info;
 			sourceTree = "<group>";
 		};
 		50E780142628A42A00F49E1B /* Music */ = {
@@ -512,7 +520,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Navigation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -533,7 +541,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Navigation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
