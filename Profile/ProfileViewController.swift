@@ -138,6 +138,8 @@ class ProfileViewController: UIViewController {
         someState.toggle()
     }
     
+    
+    
     //MARK: Constraints
     
     func setupConstraints() {
@@ -214,9 +216,7 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
-        let photosViewController = PhotosViewController()
-        photosViewController.title = "Photo Gallery"
-        navigationController?.pushViewController(photosViewController, animated: true)
+        coordinator?.startPhotos()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

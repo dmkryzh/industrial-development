@@ -24,6 +24,7 @@
 		505EDD56260E48BA00319C7A /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD55260E48BA00319C7A /* LoginCoordinator.swift */; };
 		505EDD59260E78C400319C7A /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD58260E78C400319C7A /* BrutForce.swift */; };
 		5079DAE32636DE1D00136C52 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079DAE22636DE1D00136C52 /* AudioPlayer.swift */; };
+		50BAA7CD263F41FC0017F418 /* PhotosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAA7CC263F41FC0017F418 /* PhotosViewModel.swift */; };
 		50E780172628C53700F49E1B /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E780162628C53700F49E1B /* MusicViewController.swift */; };
 		50E7801F2628D82C00F49E1B /* Master.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50E7801E2628D82C00F49E1B /* Master.mp3 */; };
 		50E780222629B15900F49E1B /* Queen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50E780212629B15900F49E1B /* Queen.mp3 */; };
@@ -63,6 +64,7 @@
 		505EDD55260E48BA00319C7A /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		505EDD58260E78C400319C7A /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
 		5079DAE22636DE1D00136C52 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		50BAA7CC263F41FC0017F418 /* PhotosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModel.swift; sourceTree = "<group>"; };
 		50E780162628C53700F49E1B /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		50E7801E2628D82C00F49E1B /* Master.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Master.mp3; path = ../../../../../../Downloads/Master.mp3; sourceTree = "<group>"; };
 		50E780212629B15900F49E1B /* Queen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Queen.mp3; path = "../../../../../10. Мультимедиа/AVFoundation_Audio/AVFoundation_Audio/Music/Queen.mp3"; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				E2AAF97225BDBA4500A30723 /* Photos.swift */,
 				E2AAF96F25BDA77F00A30723 /* PhotosCollectionViewCell.swift */,
 				E2AAF96C25BDA74F00A30723 /* PhotosViewController.swift */,
+				50BAA7CC263F41FC0017F418 /* PhotosViewModel.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				060782B4250CE27700A87020 /* SceneDelegate.swift in Sources */,
 				505EDD59260E78C400319C7A /* BrutForce.swift in Sources */,
 				E2AAF96925BDA62F00A30723 /* PhotosTableViewCell.swift in Sources */,
+				50BAA7CD263F41FC0017F418 /* PhotosViewModel.swift in Sources */,
 				E24BCFEA25B77B08006F7711 /* PostTableViewCell.swift in Sources */,
 				E2AAF97025BDA77F00A30723 /* PhotosCollectionViewCell.swift in Sources */,
 				E2AAF96D25BDA74F00A30723 /* PhotosViewController.swift in Sources */,
@@ -519,10 +523,10 @@
 			baseConfigurationReference = B11811169888747107DDA3F2 /* Pods-Navigation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "Apple Development: dparalon@icloud.com (9XL6CV3YX6)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -540,10 +544,10 @@
 			baseConfigurationReference = 54B96D5774A4F3DE4ADFC0C4 /* Pods-Navigation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "Apple Development: dparalon@icloud.com (9XL6CV3YX6)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

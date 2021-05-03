@@ -23,5 +23,12 @@ class ProfileCoordinator: Coordinator {
         vc.coordinator = self
         navController.setViewControllers([vc], animated: true)
     }
+    
+    func startPhotos() {
+        let photosVm = PhotosViewModel(numberOfSections: 1, collectionIdentifier: "PhotosCell", photoSet: PhotoSet.photoSet)
+        let photosVc = PhotosViewController(viewModel: photosVm)
+        photosVc.coordinator = self
+        navController.pushViewController(photosVc, animated: true)
+    }
 
 }

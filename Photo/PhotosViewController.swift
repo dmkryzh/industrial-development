@@ -10,18 +10,11 @@ import SnapKit
 
 class PhotosViewController: UIViewController {
     
-    class TestResult {
-        var property: String
-        init(property: String) {
-            self.property = property
-        }
-    }
+    weak var coordinator: ProfileCoordinator?
     
-    var date = Date()
+    var viewModel: PhotosViewModel
     
-    var timer: Timer?
-    
-    let timerLabel: UILabel = {
+    lazy var timerLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
@@ -36,65 +29,27 @@ class PhotosViewController: UIViewController {
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PhotosCollectionViewCell.self))
-        collectionView.toAutoLayout()
+        collectionView.dataSource = viewModel
+        collectionView.delegate = viewModel
+        collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: viewModel.collectionIdentifier)
         collectionView.backgroundColor = .white
         return collectionView
     }()
     
-    func addTime() {
-        
-        let time = Date().timeIntervalSince(date)
-        
-        let hours = Int(time) / 3600
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
-        
-        var times: [String] = []
-        if hours > 0 {
-            times.append("\(hours)h")
-        }
-        if minutes > 0 {
-            times.append("\(minutes)m")
-        }
-        times.append("\(seconds)s")
-        
-        timerLabel.text = times.joined(separator: " ")
+    init(viewModel: PhotosViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
-
     
-    func testResult(completion: (Result<TestResult, AppErrors>) -> Void) {
-        if let _ = self.timer {
-            completion(.success(TestResult(property: "Result OK")))
-        } else {
-            completion(.failure(AppErrors.internalError))
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func useTimer() {
-        
-        testResult() { result in
-            switch result {
-            case .success(let test):
-                print(test.property)
-            case .failure(let error):
-                print(error.rawValue)
-            }
+        viewModel.toUpdatekWithTimeInterval(timeInterval: 1.0) {
+            self.viewModel.timerString(propagateTo: &self.timerLabel.text)
         }
         
-        if timer == nil {
-            date = Date()
-            timer = Timer(timeInterval: 1.0, repeats: true) { _ in
-                self.addTime() }
-            RunLoop.current.add(timer!, forMode: .common)
-            
-        } else {
-            timer!.invalidate()
-            timer = nil
-            timerLabel.text = nil
-        }
     }
     
     func setupConstraints() {
@@ -112,6 +67,7 @@ class PhotosViewController: UIViewController {
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Photo Gallery"
         view.backgroundColor = .white
         view.addSubviews(collectionView, timerLabel)
         setupConstraints()
@@ -127,52 +83,6 @@ class PhotosViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         useTimer()
-        
-    }
-}
-
-//MARK: Extensions
-
-extension PhotosViewController: UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PhotoSet.photoSet.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let photo = PhotoSet.photoSet[indexPath.item]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotosCollectionViewCell.self), for: indexPath) as! PhotosCollectionViewCell
-        cell.imageItem = photo
-        return cell
-    }
-    
-}
-
-extension PhotosViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat = (collectionView.bounds.width - 8 * 4) / 3
-        return CGSize(width: width, height: width)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
     }
 }
