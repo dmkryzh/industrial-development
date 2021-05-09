@@ -43,7 +43,7 @@ struct NetworkService {
     }
     
     static func dataTask( url: URL,
-                          completionData: @escaping (String?) -> Void,
+                          completionData: @escaping (Data?) -> Void,
                           completionResponse: @escaping ([String:Any]?, Int) -> Void,
                           completionError: @escaping (String?) -> Void) {
 
@@ -58,14 +58,31 @@ struct NetworkService {
             completionResponse(httpResponse.allHeaderFields as? [String:Any], httpResponse.statusCode)
             
             if let data = data {
-                completionData(String(data: data, encoding: .utf8))
+                completionData(data)
             }
             
         }
         task.resume()
     }
     
+    
+    static func toObject(json: Data) throws -> Dictionary<String, Any>? {
+        return try JSONSerialization.jsonObject(
+            with: json,
+            options: .mutableContainers
+        ) as? [String: Any]
+    }
+    
+    static func toData(dictionary: Dictionary<String, Any>) throws -> Data {
+        return try JSONSerialization.data(
+            withJSONObject: dictionary,
+            options: .fragmentsAllowed
+        )
+    }
+    
+    
 }
+
 
 
 
