@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = appCoordinator?.rootViewController
         let appConfiguration = AppConfiguration.optionTwo(URL(string: urls.randomElement()!)!)
         NetworkService.appConf = appConfiguration.returnUrl()
+        FirebaseApp.configure()
         window?.makeKeyAndVisible()
         appCoordinator?.start()
     }

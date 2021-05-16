@@ -7,19 +7,14 @@
 
 import UIKit
 import SnapKit
-
-protocol LogInViewControllerDelegate: AnyObject {
-    
-    func validateLogin(_: String) -> Bool
-    func validatePassword(_: String) -> Bool
-    
-}
+import FirebaseAuth
+import Firebase
 
 class LogInViewController: UIViewController {
     
-    weak var coordinator: LoginCoordinator?
+    var viewModel = LoginViewModel(loginInspector: LoginInspectorViewModelDelegate())
     
-    var delegate: LogInViewControllerDelegate?
+    weak var coordinator: LoginCoordinator?
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -40,6 +35,7 @@ class LogInViewController: UIViewController {
         login.layer.borderWidth = 0.5
         login.addInternalPaddings(left: 10, right: 10)
         login.autocapitalizationType = .none
+        login.addTarget(self, action: #selector (isFilled), for: .editingChanged)
         login.placeholder = "Email or phone"
         return login
     }()
@@ -61,6 +57,7 @@ class LogInViewController: UIViewController {
         password.addInternalPaddings(left: 10, right: 40)
         password.placeholder = "Password"
         password.rightView?.addSubview(activityIndicator)
+        password.addTarget(self, action: #selector (isFilled), for: .editingChanged)
         let rightView = password.rightView?.frame.size ?? CGSize.zero
         activityIndicator.center = CGPoint(x: rightView.width / 2, y: rightView.height / 2)
         return password
@@ -76,16 +73,17 @@ class LogInViewController: UIViewController {
     
     let logInButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Log In", for: .normal)
+        button.setTitle("Sign In", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
         button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(1), for: .normal)
         button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.8), for: .selected)
         button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.8), for: .highlighted)
-        button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.8), for: .disabled)
+        button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.4), for: .disabled)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.darkGray, for: .selected)
         button.setTitleColor(.darkGray, for: .highlighted)
+        button.isEnabled = false
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector (navigateTo), for: .touchUpInside)
         return button
@@ -108,10 +106,25 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    let registerButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Sign Up", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(1), for: .normal)
+        button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.8), for: .selected)
+        button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.8), for: .highlighted)
+        button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.8), for: .disabled)
+        button.addTarget(self, action: #selector (registerUser), for: .touchUpInside)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.darkGray, for: .selected)
+        button.setTitleColor(.darkGray, for: .highlighted)
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
     lazy var stackLogPas: UIStackView = {
-        let stackLogPas = UIStackView()
-        stackLogPas.addArrangedSubview(login)
-        stackLogPas.addArrangedSubview(password)
+        let stackLogPas = UIStackView(arrangedSubviews: [login, password])
         stackLogPas.alignment = .fill
         stackLogPas.distribution = .fillEqually
         stackLogPas.axis = .vertical
@@ -123,9 +136,7 @@ class LogInViewController: UIViewController {
         stackLogPas.spacing = 0
         return stackLogPas
     }()
-    
-    
-    
+
     // MARK: Constraints
     
     func setupConstraints() {
@@ -163,64 +174,97 @@ class LogInViewController: UIViewController {
             make.height.equalTo(50)
             make.leading.equalTo(containerView.snp.leading).offset(16)
             make.trailing.equalTo(containerView.snp.trailing).inset(16)
+        }
+        
+        registerButton.snp.makeConstraints() { make in
+            make.top.equalTo(hackPassword.snp.bottom).offset(16)
+            make.height.equalTo(50)
+            make.leading.equalTo(containerView.snp.leading).offset(16)
+            make.trailing.equalTo(containerView.snp.trailing).inset(16)
             make.bottom.equalTo(containerView.snp.bottom)
         }
     }
     
-    let dispatchGroup = DispatchGroup()
-    
-    let dispatchQueueBacground = DispatchQueue(label: "background", qos: .background, attributes: .concurrent)
-    
-    //MARK: Functions
+    // MARK: Functions
     
     @objc func brut() {
-        
-        var hackedValue: String?
-        
-        self.activityIndicator.startAnimating()
-        
-        dispatchGroup.enter()
-        dispatchQueueBacground.async {
-            let brut = BrutForce()
-            hackedValue = brut.brutForce(Checker.shared.password)
-            self.dispatchGroup.leave()
+        viewModel.brut(indicator: activityIndicator) { [self] value in
+            password.text = value
+            password.isSecureTextEntry = false
+            activityIndicator.stopAnimating()
         }
-        
-        dispatchGroup.notify(queue: .main) {
-            self.password.text = hackedValue
-            self.password.isSecureTextEntry = false
-            self.activityIndicator.stopAnimating()
+    }
+    
+    @objc func isFilled() {
+        viewModel.didEnterText(login: self.login.text, password: self.password.text) {
+            self.logInButton.isEnabled = true
         }
-        
+    }
+    
+    @objc func isFilledRegistrationFields() {
+        viewModel.didEnterText(login: alert.textFields?[0].text, password: alert.textFields?[1].text) { [self] in
+            alert.actions[0].isEnabled = true
+        }
     }
     
     @objc func navigateTo() {
-        do {
-            let isOK = try loginCheck()
-            if isOK {
-                coordinator?.startProfile()
-            }
-            
-        } catch AppErrors.unauthenticated {
+        guard let _ = coordinator else { return }
+        
+        viewModel.navigateTo(login: self.login.text ?? "", password: self.password.text ?? "", trueCompletion: {
+            self.coordinator!.startProfile()
+        },
+        falseCompletion: {
             let alert = UIAlertController(title: "Error", message: "Wrong login or\\and password", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default)
             alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+            self.coordinator!.navController.present(alert, animated: true, completion: nil)
+        })
+            
+        }
+    
+    
+    @objc func registerUser() {
+        self.coordinator!.navController.present(alert, animated: true, completion: nil)
+    }
+
+    
+    lazy var alert: UIAlertController = {
+        let alert = UIAlertController(title: "Registration", message: "Please fill email and password", preferredStyle: .alert)
+        alert.addTextField() { login in
+            login.textColor = .black
+            login.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+            login.autocapitalizationType = .none
+            login.tintColor = UIColor.init(named: "accentColor")
+            login.addInternalPaddings(left: 10, right: 10)
+            login.autocapitalizationType = .none
+            login.placeholder = "Email or phone"
+            login.addTarget(self, action: #selector(self.isFilledRegistrationFields), for: .editingChanged)
         }
         
-        catch  {
-            print("unknow issue")
+        alert.addTextField() { password in
+            password.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+            password.autocapitalizationType = .none
+            password.tintColor = UIColor(named: "accentColor")
+            password.textColor = .black
+            password.isSecureTextEntry = true
+            password.autocapitalizationType = .none
+            password.addInternalPaddings(left: 10, right: 40)
+            password.placeholder = "Password"
+            password.addTarget(self, action: #selector(self.isFilledRegistrationFields), for: .editingChanged)
         }
-    }
+
+        let actionOk = UIAlertAction(title: "OK", style: .default)
+        let actionCancel = UIAlertAction(title: "Cancel", style: .default)
+        actionOk.isEnabled = false
+  
+        alert.addAction(actionOk)
+        alert.addAction(actionCancel)
+        
+        return alert
+    }()
     
-    func loginCheck() throws -> Bool {
-        guard delegate != nil else { throw AppErrors.internalError}
-        guard delegate!.validateLogin(self.login.text ?? ""),
-              delegate!.validatePassword(self.password.text ?? "") else { throw AppErrors.unauthenticated}
-        return true
-    }
-    
-    
+  
+ 
     // MARK: ViewDidLoad
     
     override func viewDidLoad() {
@@ -228,10 +272,9 @@ class LogInViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubviews(scrollView)
         scrollView.addSubviews(containerView)
-        containerView.addSubviews(logo, stackLogPas, logInButton, hackPassword)
+        containerView.addSubviews(logo, stackLogPas, logInButton, hackPassword, registerButton)
         setupConstraints()
-        delegate = LoginValidator()
-        print("пароль: \(Checker.shared.password)")
+        print("пароль: \(LoginChecker.shared.password)")
     }
     
     // MARK: Keyboard observers
@@ -271,59 +314,3 @@ class LogInViewController: UIViewController {
     }
     
 }
-
-// MARK: Extensions
-
-extension UIView {
-    func toAutoLayout() {
-        self.translatesAutoresizingMaskIntoConstraints = false
-    }
-    func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { addSubview($0) }
-    }
-}
-
-extension UITextField {
-    func addInternalPaddings(left: CGFloat, right: CGFloat) {
-        self.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: left, height: self.frame.height))
-        self.rightView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: right, height: self.frame.height))
-        self.leftViewMode = .always
-        self.rightViewMode = .always
-    }
-}
-
-extension UIImage {
-    func alpha(_ value:CGFloat) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        draw(at: CGPoint.zero, blendMode: .normal, alpha: value)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage!
-    }
-}
-
-class LoginValidator: LogInViewControllerDelegate {
-    
-    func validateLogin(_ login: String) -> Bool {
-        guard login == Checker.shared.login else { return false}
-        return true
-    }
-    
-    func validatePassword(_ password: String) -> Bool {
-        guard password == Checker.shared.password else { return false}
-        return true
-    }
-}
-
-class Checker {
-    
-    static let shared = Checker()
-    var login = "777"
-    lazy var password: String = {
-        let chars = "abcdefghijklmnopqrstuvwxyz"
-        return String((0..<4).map{ _ in chars.randomElement()! })
-    }()
-    private init() {}
-}
-
-
