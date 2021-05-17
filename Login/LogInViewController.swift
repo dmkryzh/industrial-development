@@ -85,7 +85,7 @@ class LogInViewController: UIViewController {
         button.setTitleColor(.darkGray, for: .highlighted)
         button.isEnabled = false
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector (navigateTo), for: .touchUpInside)
+        button.addTarget(self, action: #selector (signInLogic), for: .touchUpInside)
         return button
     }()
     
@@ -136,7 +136,52 @@ class LogInViewController: UIViewController {
         stackLogPas.spacing = 0
         return stackLogPas
     }()
-
+    
+    lazy var alert: UIAlertController = {
+        let alert = UIAlertController(title: "Registration", message: "Please fill email and password", preferredStyle: .alert)
+        alert.addTextField() { login in
+            login.textColor = .black
+            login.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+            login.autocapitalizationType = .none
+            login.tintColor = UIColor.init(named: "accentColor")
+            login.addInternalPaddings(left: 10, right: 10)
+            login.autocapitalizationType = .none
+            login.placeholder = "Email or phone"
+            login.addTarget(self, action: #selector(self.isFilledRegistrationFields), for: .editingChanged)
+        }
+        
+        alert.addTextField() { password in
+            password.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+            password.autocapitalizationType = .none
+            password.tintColor = UIColor(named: "accentColor")
+            password.textColor = .black
+            password.isSecureTextEntry = true
+            password.autocapitalizationType = .none
+            password.addInternalPaddings(left: 10, right: 40)
+            password.placeholder = "Password"
+            password.addTarget(self, action: #selector(self.isFilledRegistrationFields), for: .editingChanged)
+        }
+        
+        let actionOk = UIAlertAction(title: "OK", style: .default) { [self] _ in
+            guard let _ = alert.textFields?[0].text else { return }
+            viewModel.loginInspector?.createUser(email: alert.textFields![0].text!, password: alert.textFields![1].text!){
+            let alertCreated = UIAlertController(title: "Created", message: "Account is successefully created", preferredStyle: .alert)
+            present(alertCreated, animated: true) {
+                dismiss(animated: true, completion: nil)
+                sleep(3)
+            }
+            }
+            
+            
+        }
+        let actionCancel = UIAlertAction(title: "Cancel", style: .default)
+        actionOk.isEnabled = false
+        alert.addAction(actionOk)
+        alert.addAction(actionCancel)
+        
+        return alert
+    }()
+    
     // MARK: Constraints
     
     func setupConstraints() {
@@ -196,21 +241,25 @@ class LogInViewController: UIViewController {
     }
     
     @objc func isFilled() {
-        viewModel.didEnterText(login: self.login.text, password: self.password.text) {
+        viewModel.didEnterText(login: self.login.text, password: self.password.text, trueCompletion: {
             self.logInButton.isEnabled = true
-        }
+        }, falseCompletion: {
+            self.logInButton.isEnabled = false
+        })
     }
     
-    @objc func isFilledRegistrationFields() {
-        viewModel.didEnterText(login: alert.textFields?[0].text, password: alert.textFields?[1].text) { [self] in
-            alert.actions[0].isEnabled = true
+        @objc func isFilledRegistrationFields() {
+        viewModel.didEnterText(login: alert.textFields?[0].text, password: alert.textFields?[1].text, trueCompletion: {
+            self.alert.actions[0].isEnabled = true
+        }, falseCompletion: {
+            self.alert.actions[0].isEnabled = false
+        })
         }
-    }
     
     @objc func navigateTo() {
         guard let _ = coordinator else { return }
         
-        viewModel.navigateTo(login: self.login.text ?? "", password: self.password.text ?? "", trueCompletion: {
+        viewModel.navigateTo(login: self.login.text, password: self.password.text, trueCompletion: {
             self.coordinator!.startProfile()
         },
         falseCompletion: {
@@ -219,52 +268,19 @@ class LogInViewController: UIViewController {
             alert.addAction(action)
             self.coordinator!.navController.present(alert, animated: true, completion: nil)
         })
-            
-        }
+        
+    }
+    
+    @objc func signInLogic() {
+        viewModel.loginInspector?.signIn(email: login.text ?? "", password: password.text ?? "", completion: nil)
+        self.coordinator!.startProfile()
+    }
     
     
     @objc func registerUser() {
         self.coordinator!.navController.present(alert, animated: true, completion: nil)
     }
 
-    
-    lazy var alert: UIAlertController = {
-        let alert = UIAlertController(title: "Registration", message: "Please fill email and password", preferredStyle: .alert)
-        alert.addTextField() { login in
-            login.textColor = .black
-            login.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-            login.autocapitalizationType = .none
-            login.tintColor = UIColor.init(named: "accentColor")
-            login.addInternalPaddings(left: 10, right: 10)
-            login.autocapitalizationType = .none
-            login.placeholder = "Email or phone"
-            login.addTarget(self, action: #selector(self.isFilledRegistrationFields), for: .editingChanged)
-        }
-        
-        alert.addTextField() { password in
-            password.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-            password.autocapitalizationType = .none
-            password.tintColor = UIColor(named: "accentColor")
-            password.textColor = .black
-            password.isSecureTextEntry = true
-            password.autocapitalizationType = .none
-            password.addInternalPaddings(left: 10, right: 40)
-            password.placeholder = "Password"
-            password.addTarget(self, action: #selector(self.isFilledRegistrationFields), for: .editingChanged)
-        }
-
-        let actionOk = UIAlertAction(title: "OK", style: .default)
-        let actionCancel = UIAlertAction(title: "Cancel", style: .default)
-        actionOk.isEnabled = false
-  
-        alert.addAction(actionOk)
-        alert.addAction(actionCancel)
-        
-        return alert
-    }()
-    
-  
- 
     // MARK: ViewDidLoad
     
     override func viewDidLoad() {

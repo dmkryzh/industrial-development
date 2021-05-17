@@ -7,12 +7,13 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 
 protocol LoginInspectorViewModel {
     
     func checkUser()
-    func createUser(email: String, password: String)
-    func signIn(email: String, password: String)
+    func createUser(email: String, password: String, completion: (() -> Void)?)
+    func signIn(email: String, password: String, completion: (() -> Void)?)
     func signOut()
     func validateLogin(_ login: String) -> Bool
     func validatePassword(_ password: String) -> Bool
@@ -45,11 +46,11 @@ class LoginViewModel {
         
     }
     
-    func navigateTo(login: String, password: String, trueCompletion: @escaping () -> Void, falseCompletion: @escaping () -> Void) {
+    func navigateTo(login: String?, password: String?, trueCompletion: @escaping () -> Void, falseCompletion: @escaping () -> Void) {
         do {
             let isOK = try loginCheck(login: login, password: password)
             if isOK {
-               trueCompletion()
+                trueCompletion()
             }
             
         } catch AppErrors.unauthenticated {
@@ -72,10 +73,15 @@ class LoginViewModel {
         self.loginInspector = loginInspector
     }
     
-    func didEnterText(login: String?, password: String?, completion: @escaping () -> Void) {
-        guard login != nil, password != nil else { return }
-        guard login != "", password != "" else { return }
-        completion()
+    func didEnterText(login: String?, password: String?, trueCompletion: @escaping () -> Void, falseCompletion: @escaping () -> Void) {
+        guard login != nil, password != nil else {
+            falseCompletion()
+            return }
+        guard login != "", password != "" else {
+            falseCompletion()
+            return
+        }
+        trueCompletion()
         
     }
 }
@@ -86,16 +92,32 @@ class LoginInspectorViewModelDelegate: LoginInspectorViewModel {
         //FirebaseAuth.Auth.auth().currentUser
     }
     
-    func createUser(email: String, password: String) {
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: nil)
+    func createUser(email: String, password: String, completion: (() -> Void)?) {
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            guard let error = error else {
+                guard let _ = completion else { return }
+                completion!()
+                print(result!)
+                return
+            }
+            print(error.localizedDescription)
+        }
     }
     
-    func signIn(email: String, password: String) {
-        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: nil)
+    func signIn(email: String, password: String, completion: (() -> Void)?) {
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+            guard let error = error else {
+                guard let _ = completion else { return }
+                completion!()
+                print(result!)
+                return
+            }
+            print(error.localizedDescription)
+        }
     }
     
     func signOut() {
-        try? FirebaseAuth.Auth.auth().signOut()
+        try? Auth.auth().signOut()
     }
     
     func validateLogin(_ login: String) -> Bool {
