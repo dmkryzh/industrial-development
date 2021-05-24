@@ -16,8 +16,19 @@ protocol LoginInspectorViewModel {
     func showLoginAlert(email: String, password: String, alertHandler: ((UIAlertController) -> Void)?, successHandler: (() -> Void)?, failureHandler: (()->Void)?)
     func validateLogin(_ login: String) -> Bool
     func validatePassword(_ password: String) -> Bool
-    var successAlert: UIAlertController { get }
-    var failureAlert: UIAlertController { get }
+}
+
+extension LoginInspectorViewModel {
+    func showLoginAlert(email: String, password: String, alertHandler: ((UIAlertController) -> Void)?, successHandler: (() -> Void)?, failureHandler: (()->Void)?) {
+    }
+    
+    func validateLogin(_ login: String) -> Bool {
+        return false
+    }
+    
+    func validatePassword(_ password: String) -> Bool {
+        return false
+    }
 }
 
 class LoginViewModel {
@@ -87,10 +98,8 @@ class LoginViewModel {
     }
 }
 
+
 class LoginInspectorViewModelDelegate: LoginInspectorViewModel {
-    
-    let successAlert = UIAlertController(title: "Success", message: "Account is created", preferredStyle: .alert)
-    let failureAlert = UIAlertController(title: "Passwords don't match", message: "Please try again", preferredStyle: .alert)
     
     func showLoginAlert(email: String, password: String, alertHandler: ((UIAlertController) -> Void)?, successHandler: (()->Void)?, failureHandler: (()->Void)?) {
         

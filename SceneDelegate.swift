@@ -5,6 +5,7 @@
 
 import UIKit
 import Firebase
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -26,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         FirebaseApp.configure()
         window?.makeKeyAndVisible()
         appCoordinator?.start()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
