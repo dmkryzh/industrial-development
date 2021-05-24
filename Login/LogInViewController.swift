@@ -272,6 +272,10 @@ class LogInViewController: UIViewController {
         
     }
     
+    lazy var successAlert = UIAlertController(title: "Success", message: "Account is created", preferredStyle: .alert)
+    
+    var failureAlert = UIAlertController(title: "Failure", message: "Either login or passworg is wrong, please try again", preferredStyle: .alert)
+    
     @objc func signInLogic() {
         guard let _ = coordinator else { return }
         viewModel.loginInspector?.signIn(email: login.text ?? "", password: password.text ?? "",
@@ -282,7 +286,7 @@ class LogInViewController: UIViewController {
                                             viewModel.loginInspector?.showLoginAlert(email: login.text ?? "", password: password.text ?? "", alertHandler: { alert in
                                                                     present(alert, animated: true, completion: nil)},
                                                     successHandler: {
-                                                        present(viewModel.loginInspector!.successAlert, animated: true) {
+                                                        present(successAlert, animated: true) {
                                                             sleep(1)
                                                             dismiss(animated: true) {
                                                                 guard let _ = coordinator else { return }

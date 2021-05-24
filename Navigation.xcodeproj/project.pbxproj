@@ -20,6 +20,9 @@
 		50148844264FD93100E73F5F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50148843264FD93100E73F5F /* LoginViewModel.swift */; };
 		50148846264FDC0400E73F5F /* GenericExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50148845264FDC0400E73F5F /* GenericExtentions.swift */; };
 		501488482651074000E73F5F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 501488472651074000E73F5F /* GoogleService-Info.plist */; };
+		505D1932265B9E95007D4FA1 /* StartAuthorisationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D1931265B9E95007D4FA1 /* StartAuthorisationVC.swift */; };
+		505D1934265B9EB2007D4FA1 /* StartAuthorisationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */; };
+		505D1936265BC040007D4FA1 /* MainLoginDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D1935265BC040007D4FA1 /* MainLoginDB.swift */; };
 		505EDD2F2607DB2000319C7A /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD2E2607DB2000319C7A /* MainTabBarController.swift */; };
 		505EDD3D26091DAC00319C7A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD3C26091DAC00319C7A /* Coordinator.swift */; };
 		505EDD4026092B4900319C7A /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EDD3F26092B4900319C7A /* MainCoordinator.swift */; };
@@ -67,6 +70,9 @@
 		50148843264FD93100E73F5F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		50148845264FDC0400E73F5F /* GenericExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericExtentions.swift; sourceTree = "<group>"; };
 		501488472651074000E73F5F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		505D1931265B9E95007D4FA1 /* StartAuthorisationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAuthorisationVC.swift; sourceTree = "<group>"; };
+		505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAuthorisationVM.swift; sourceTree = "<group>"; };
+		505D1935265BC040007D4FA1 /* MainLoginDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginDB.swift; sourceTree = "<group>"; };
 		505EDD2E2607DB2000319C7A /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		505EDD3C26091DAC00319C7A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		505EDD3F26092B4900319C7A /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -124,6 +130,7 @@
 				060782B3250CE27700A87020 /* SceneDelegate.swift */,
 				505EDD2E2607DB2000319C7A /* MainTabBarController.swift */,
 				50148845264FDC0400E73F5F /* GenericExtentions.swift */,
+				505D1930265B9E63007D4FA1 /* MainAuthorisation */,
 				50BAA7C9263DDBBD0017F418 /* Info */,
 				50BAA7C8263DDBAB0017F418 /* Feed */,
 				50E780142628A42A00F49E1B /* Music */,
@@ -162,6 +169,16 @@
 				505EDD58260E78C400319C7A /* BrutForce.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		505D1930265B9E63007D4FA1 /* MainAuthorisation */ = {
+			isa = PBXGroup;
+			children = (
+				505D1931265B9E95007D4FA1 /* StartAuthorisationVC.swift */,
+				505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */,
+				505D1935265BC040007D4FA1 /* MainLoginDB.swift */,
+			);
+			path = MainAuthorisation;
 			sourceTree = "<group>";
 		};
 		505EDD4826092C5600319C7A /* Coordinators */ = {
@@ -388,6 +405,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				505D1936265BC040007D4FA1 /* MainLoginDB.swift in Sources */,
 				50148842264DAFF600E73F5F /* PostViewModel.swift in Sources */,
 				505EDD4326092BC300319C7A /* FeedCoordinator.swift in Sources */,
 				505EDD4626092C0100319C7A /* ProfileCoordinator.swift in Sources */,
@@ -397,9 +415,11 @@
 				505EDD56260E48BA00319C7A /* LoginCoordinator.swift in Sources */,
 				060782B2250CE27700A87020 /* AppDelegate.swift in Sources */,
 				50BAA7D02643125A0017F418 /* NetworkService.swift in Sources */,
+				505D1934265B9EB2007D4FA1 /* StartAuthorisationVM.swift in Sources */,
 				E2AAF97325BDBA4500A30723 /* Photos.swift in Sources */,
 				505EDD4D260A834B00319C7A /* ProfileViewModel.swift in Sources */,
 				E25052AD25B33F4700201617 /* LogInViewController.swift in Sources */,
+				505D1932265B9E95007D4FA1 /* StartAuthorisationVC.swift in Sources */,
 				060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */,
 				060782CA250CEE7200A87020 /* Post.swift in Sources */,
 				5079DAE32636DE1D00136C52 /* AudioPlayer.swift in Sources */,
