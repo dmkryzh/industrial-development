@@ -27,6 +27,10 @@ class FavoriteVM {
         coreData.removeAll()
     }
     
+    func deletePost(_ task: PostStorage) {
+        coreData.remove(task: task)
+    }
+    
     init(cd: CoreDataStack) {
         coreData = cd
         coreData.clousure = { [self] in

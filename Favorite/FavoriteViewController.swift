@@ -83,7 +83,15 @@ extension FavoriteViewController: UITableViewDataSource {
 }
 
 extension FavoriteViewController: UITableViewDelegate {
- 
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, success) in
+            viewModel.deletePost((viewModel.savePosts?[indexPath.item])!)
+            viewModel.fetchPosts()
+            success(true)
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
 
 extension FavoriteViewController: FavoriteVmOutput {

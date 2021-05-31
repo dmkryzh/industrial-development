@@ -23,13 +23,13 @@ class CoreDataStack {
     var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
-    
+
     var clousure: (() -> Void)?
     
-    
-    func newBackgroundContext() -> NSManagedObjectContext {
+    var backgroundContext: NSManagedObjectContext {
         return persistentContainer.newBackgroundContext()
     }
+    
     
     func fetchTasks() -> [PostStorage] {
         let request: NSFetchRequest<PostStorage> = PostStorage.fetchRequest()
@@ -43,6 +43,7 @@ class CoreDataStack {
     func remove(task: PostStorage) {
         viewContext.delete(task)
         save(context: viewContext)
+        clousure!()
     }
     
     func removeAll() {
@@ -69,6 +70,7 @@ class CoreDataStack {
         
         save(context: viewContext)
     }
+    
     
     private func save(context: NSManagedObjectContext) {
         guard context.hasChanges else { return }
@@ -103,3 +105,4 @@ class CoreDataStack {
     }
     
 }
+
