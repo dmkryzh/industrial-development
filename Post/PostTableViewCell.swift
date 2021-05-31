@@ -29,7 +29,7 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    var closure: (() -> Void)?
+    var onSaveLikedPostTap: (() -> Void)?
     
     let titleLabel: UILabel = {
         let title = UILabel()
@@ -91,8 +91,8 @@ class PostTableViewCell: UITableViewCell {
     }()
    
     @objc func likeTap() {
-        guard let _ = closure else { return }
-        closure!()
+        guard let onSaveLikedPostTap = onSaveLikedPostTap else { return }
+        onSaveLikedPostTap()
         UIView.animateKeyframes(withDuration: 1, delay: 0, options: .calculationModeCubic, animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
                 self.heart.alpha = 1

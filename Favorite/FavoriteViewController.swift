@@ -45,7 +45,7 @@ class FavoriteViewController: UIViewController {
     init(vm: FavoriteVM) {
         viewModel = vm
         super.init(nibName: nil, bundle: nil)
-        vm.reload = self
+        vm.reloadOutput = self
     }
     
     required init?(coder: NSCoder) {
@@ -69,8 +69,8 @@ extension FavoriteViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.viewModel.fetchPosts()
-        guard let _ = viewModel.savePosts else { return 0 }
-        return self.viewModel.savePosts!.count
+        guard let count = viewModel.savePosts?.count else { return 0 }
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,10 +80,23 @@ extension FavoriteViewController: UITableViewDataSource {
         return cellFromPost
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+    }
+    
 }
 
 extension FavoriteViewController: UITableViewDelegate {
- 
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, success) in
+            viewModel.deletePost((viewModel.savePosts?[indexPath.item])!)
+            //viewModel.fetchPosts()
+            success(true)
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
 
 extension FavoriteViewController: FavoriteVmOutput {

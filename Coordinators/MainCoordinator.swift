@@ -12,7 +12,7 @@ class MainCoordinator: Coordinator  {
     
     var childCoordinators: [Coordinator] = []
     var rootViewController: UITabBarController
-    var coreData: CoreDataStack
+    private let coreData: CoreDataStack
 
     init(rootViewController: UITabBarController, coreData: CoreDataStack) {
         self.rootViewController = rootViewController

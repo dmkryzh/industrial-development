@@ -13,7 +13,7 @@ class FavoriteCoordrinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
     var navController: UINavigationController
-    var coreData: CoreDataStack
+    private let coreData: CoreDataStack
     
     init(navigation: UINavigationController, coreData: CoreDataStack) {
         navController = navigation

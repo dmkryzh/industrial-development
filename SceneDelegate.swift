@@ -10,7 +10,7 @@ import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    var coreDataStack = CoreDataStack()
+    private let coreDataStack = CoreDataStack()
     
         // MARK: - Core Data Saving support
         

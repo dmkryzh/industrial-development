@@ -13,9 +13,9 @@ protocol FavoriteVmOutput {
 
 class FavoriteVM {
     
-    var coreData: CoreDataStack
+    private let coreData: CoreDataStack
     
-    var reload: FavoriteVmOutput?
+    var reloadOutput: FavoriteVmOutput?
     
     var savePosts: [PostStorage]?
     
@@ -24,15 +24,21 @@ class FavoriteVM {
     }
     
     func removeAll() {
-        coreData.removeAll()
+        coreData.removeAll { [self] in
+            fetchPosts()
+            reloadOutput?.reloadData()
+        }
+    }
+    
+    func deletePost(_ task: PostStorage) {
+        coreData.remove(task: task) { [self] in
+            fetchPosts()
+            reloadOutput?.reloadData()
+        }
     }
     
     init(cd: CoreDataStack) {
         coreData = cd
-        coreData.clousure = { [self] in
-            fetchPosts()
-            reload?.reloadData()
-        }
     }
     
 }
