@@ -35,7 +35,7 @@ class FavoriteViewController: UIViewController {
     @objc func showFilterAlert() {
         let alert = UIAlertController(title: "Enter an author name", message: nil, preferredStyle: .alert)
         let handler = {
-            self.viewModel.predicate = alert.textFields?[0].text
+            self.viewModel.author = alert.textFields?[0].text
             self.viewModel.reloadOutput?.reloadData()
         }
         let action = UIAlertAction(title: "Apply", style: .default, handler: { _ in
@@ -52,7 +52,7 @@ class FavoriteViewController: UIViewController {
     }
     
     @objc func removeFilter() {
-            self.viewModel.predicate = nil
+            self.viewModel.author = nil
             self.viewModel.reloadOutput?.reloadData()
     }
     
