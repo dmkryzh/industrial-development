@@ -12,7 +12,7 @@ class LoginCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
     var navController: UINavigationController
-    var coreData: CoreDataStack
+    private let coreData: CoreDataStack
     
     init(navigation: UINavigationController, coreData: CoreDataStack) {
         self.navController = navigation

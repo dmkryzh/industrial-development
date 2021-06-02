@@ -10,21 +10,7 @@ import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    var coreDataStack = CoreDataStack()
-    
-        // MARK: - Core Data Saving support
-        
-        func saveContext () {
-            let context = coreDataStack.persistentContainer.viewContext
-            if context.hasChanges {
-                do {
-                    try context.save()
-                } catch {
-                    let nserror = error as NSError
-                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-                }
-            }
-        }
+    private let coreDataStack = CoreDataStack()
 
     var window: UIWindow?
     var appCoordinator: MainCoordinator?

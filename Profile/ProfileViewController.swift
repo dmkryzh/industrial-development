@@ -191,10 +191,10 @@ class ProfileViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
         if !someState {
             didRotationChange()
         }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -228,7 +228,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section == 0 else { return nil }
+        guard section == 0 else { return UIView(frame: .zero) }
         return self.header
     }
 }
@@ -266,8 +266,8 @@ extension ProfileViewController: UITableViewDataSource {
             cellFromPost.post = PostItems.tableStruct[indexPath.row]
             cellFromPost.likesLabel.isUserInteractionEnabled = true
             cellFromPost.selectionStyle = .none
-            cellFromPost.closure = { [self] in
-                viewModel.saveLikedPost(PostItems.tableStruct[indexPath.row])
+            cellFromPost.onSaveLikedPostTap = { [weak self] in
+                self?.viewModel.saveLikedPost(PostItems.tableStruct[indexPath.row])
             }
             return cellFromPost
         default:

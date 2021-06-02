@@ -13,7 +13,7 @@ class ProfileCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     weak var parentCoordinator: LoginCoordinator?
     var navController: UINavigationController
-    var coreData: CoreDataStack
+    private let coreData: CoreDataStack
 
     init(navigation: UINavigationController, coreData: CoreDataStack) {
         navController = navigation

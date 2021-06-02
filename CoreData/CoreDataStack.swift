@@ -24,15 +24,15 @@ class CoreDataStack {
         return persistentContainer.viewContext
     }
     
-    var clousure: (() -> Void)?
-    
-    
-    func newBackgroundContext() -> NSManagedObjectContext {
+    var backgroundContext: NSManagedObjectContext {
         return persistentContainer.newBackgroundContext()
     }
     
-    func fetchTasks() -> [PostStorage] {
+    func fetchTasks(_ predicate: NSPredicate? = nil) -> [PostStorage] {
         let request: NSFetchRequest<PostStorage> = PostStorage.fetchRequest()
+        if let predicate = predicate {
+        request.predicate = predicate
+        }
         do {
             return try viewContext.fetch(request)
         } catch {
@@ -40,39 +40,54 @@ class CoreDataStack {
         }
     }
     
-    func remove(task: PostStorage) {
-        viewContext.delete(task)
-        save(context: viewContext)
+    func fetchByPredicate(_ predicate: NSPredicate, _ completion: (() -> Void)?) -> [PostStorage] {
+        let fetchRequest: NSFetchRequest<PostStorage> = PostStorage.fetchRequest()
+        fetchRequest.predicate = predicate
+        
+        do {
+            return try viewContext.fetch(fetchRequest)
+          
+        } catch {
+            fatalError("🤷‍♂️ Что-то пошло не так..")
+        }
+   
     }
     
-    func removeAll() {
+    func remove(task: PostStorage, _ completion: (() -> Void)?) {
+        viewContext.delete(task)
+        saveContext(context: viewContext)
+        guard let completion = completion else { return }
+        completion()
+    }
+    
+    func removeAll(_ completion: @escaping ()->Void) {
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "PostStorage")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-
+        
         do {
             try persistentContainer.persistentStoreCoordinator.execute(deleteRequest, with: viewContext)
         } catch {
             fatalError("🤷‍♂️ Что-то пошло не так..")
         }
-        
-        clousure!()
+        completion()
     }
     
     func createNewTask(content: Post) {
-        let newTask = PostStorage(context: viewContext)
-        newTask.image = content.imageName ?? ""
-        newTask.likes = content.likes ?? ""
-        newTask.postDescription = content.description ?? ""
-        newTask.title = content.title ?? ""
-        newTask.views = content.views ?? ""
-        
-        save(context: viewContext)
+        backgroundContext.perform { [self] in
+            let newTask = PostStorage(context: viewContext)
+            newTask.image = content.imageName ?? ""
+            newTask.likes = content.likes ?? ""
+            newTask.postDescription = content.description ?? ""
+            newTask.title = content.title ?? ""
+            newTask.views = content.views ?? ""
+            newTask.author = content.author ?? ""
+            saveContext(context: viewContext)
+        }
     }
     
-    private func save(context: NSManagedObjectContext) {
+    private func saveContext(context: NSManagedObjectContext) {
         guard context.hasChanges else { return }
-        
         do {
             try context.save()
         } catch {
@@ -84,8 +99,7 @@ class CoreDataStack {
         guard let userInfo = notification.userInfo else { return }
         
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-            guard let _ = clousure else { return }
-            clousure!()
+            
         }
         
         if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
@@ -103,3 +117,4 @@ class CoreDataStack {
     }
     
 }
+
