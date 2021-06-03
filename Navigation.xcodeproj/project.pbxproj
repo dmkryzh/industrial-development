@@ -222,9 +222,9 @@
 			isa = PBXGroup;
 			children = (
 				505D1931265B9E95007D4FA1 /* StartAuthorisationVC.swift */,
+				505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */,
 				505EDD2E2607DB2000319C7A /* MainTabBarController.swift */,
 				505EDD3C26091DAC00319C7A /* Coordinator.swift */,
-				505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */,
 				505D1935265BC040007D4FA1 /* MainLoginDB.swift */,
 				505EDD3F26092B4900319C7A /* MainCoordinator.swift */,
 			);
