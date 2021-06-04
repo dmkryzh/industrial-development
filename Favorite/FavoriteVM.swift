@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 protocol FavoriteVmOutput {
     func reloadData()
@@ -13,43 +14,51 @@ protocol FavoriteVmOutput {
 
 class FavoriteVM {
     
+    lazy var fetchResultsController: NSFetchedResultsController<PostStorage> = {
+        let request: NSFetchRequest<PostStorage> = PostStorage.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
+        let controller = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: context,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        return controller
+    }()
+    
     private let coreData: CoreDataStack
+    
+    var context: NSManagedObjectContext {
+        coreData.viewContext
+    }
     
     var reloadOutput: FavoriteVmOutput?
     
-    var savePosts: [PostStorage]?
-    
-    var predicate: String? {
+    var author: String? {
         didSet {
             fetchPosts()
         }
     }
-
+    
     func fetchPosts() {
-        guard let predicate = self.predicate else {
-            self.savePosts = coreData.fetchTasks()
+        guard let author = author else {
+            fetchResultsController.fetchRequest.predicate = nil
+            try? fetchResultsController.performFetch()
+            reloadOutput?.reloadData()
             return
         }
-        let nsPredicate = NSPredicate(format: "%K == %@", #keyPath(PostStorage.author), predicate)
-        self.savePosts = coreData.fetchTasks(nsPredicate)
+        let nsPredicate = NSPredicate(format: "%K == %@", #keyPath(PostStorage.author), author)
+        fetchResultsController.fetchRequest.predicate = nsPredicate
+        try? fetchResultsController.performFetch()
+        reloadOutput?.reloadData()
     }
-
+    
     func removeAll() {
-        coreData.removeAll { [self] in
-            fetchPosts()
-            reloadOutput?.reloadData()
-        }
+        coreData.removeAll()
     }
     
     func deletePost(_ task: PostStorage) {
-        coreData.remove(task: task) { [self] in
-            fetchPosts()
-            reloadOutput?.reloadData()
-        }
-    }
-    
-    func search(_ element: String) {
-        
+        coreData.remove(task: task)
     }
     
     init(cd: CoreDataStack) {

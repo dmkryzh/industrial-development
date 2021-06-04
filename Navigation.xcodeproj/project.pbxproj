@@ -135,9 +135,6 @@
 		060782A5250CE27700A87020 = {
 			isa = PBXGroup;
 			children = (
-				504244C5266137ED000EC5C5 /* CoreData */,
-				5030D43F265E9B1D0083A9E9 /* Favorite */,
-				50BAA7CE2643123C0017F418 /* Network */,
 				060782BA250CE27A00A87020 /* Assets.xcassets */,
 				060782BC250CE27A00A87020 /* LaunchScreen.storyboard */,
 				060782BF250CE27A00A87020 /* Info.plist */,
@@ -145,6 +142,9 @@
 				060782B1250CE27700A87020 /* AppDelegate.swift */,
 				060782B3250CE27700A87020 /* SceneDelegate.swift */,
 				50148845264FDC0400E73F5F /* GenericExtentions.swift */,
+				504244C5266137ED000EC5C5 /* CoreData */,
+				5030D43F265E9B1D0083A9E9 /* Favorite */,
+				50BAA7CE2643123C0017F418 /* Network */,
 				505D1930265B9E63007D4FA1 /* MainAuthorisation */,
 				50BAA7C9263DDBBD0017F418 /* Info */,
 				50BAA7C8263DDBAB0017F418 /* Feed */,
@@ -222,9 +222,9 @@
 			isa = PBXGroup;
 			children = (
 				505D1931265B9E95007D4FA1 /* StartAuthorisationVC.swift */,
+				505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */,
 				505EDD2E2607DB2000319C7A /* MainTabBarController.swift */,
 				505EDD3C26091DAC00319C7A /* Coordinator.swift */,
-				505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */,
 				505D1935265BC040007D4FA1 /* MainLoginDB.swift */,
 				505EDD3F26092B4900319C7A /* MainCoordinator.swift */,
 			);

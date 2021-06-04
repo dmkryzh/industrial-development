@@ -40,27 +40,12 @@ class CoreDataStack {
         }
     }
     
-    func fetchByPredicate(_ predicate: NSPredicate, _ completion: (() -> Void)?) -> [PostStorage] {
-        let fetchRequest: NSFetchRequest<PostStorage> = PostStorage.fetchRequest()
-        fetchRequest.predicate = predicate
-        
-        do {
-            return try viewContext.fetch(fetchRequest)
-          
-        } catch {
-            fatalError("🤷‍♂️ Что-то пошло не так..")
-        }
-   
-    }
-    
-    func remove(task: PostStorage, _ completion: (() -> Void)?) {
+    func remove(task: PostStorage) {
         viewContext.delete(task)
         saveContext(context: viewContext)
-        guard let completion = completion else { return }
-        completion()
     }
     
-    func removeAll(_ completion: @escaping ()->Void) {
+    func removeAll() {
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "PostStorage")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -70,7 +55,9 @@ class CoreDataStack {
         } catch {
             fatalError("🤷‍♂️ Что-то пошло не так..")
         }
-        completion()
+        
+        saveContext(context: viewContext)
+        
     }
     
     func createNewTask(content: Post) {

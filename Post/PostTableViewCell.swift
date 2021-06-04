@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class PostTableViewCell: UITableViewCell {
     
@@ -36,7 +37,6 @@ class PostTableViewCell: UITableViewCell {
         title.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         title.textColor = .black
         title.numberOfLines = 2
-        title.toAutoLayout()
         return title
     }()
     
@@ -51,7 +51,6 @@ class PostTableViewCell: UITableViewCell {
         let likesLabel = UILabel()
         likesLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         likesLabel.textColor = .black
-        likesLabel.toAutoLayout()
         likesLabel.isUserInteractionEnabled = true
         likesLabel.addGestureRecognizer(gesture)
         return likesLabel
@@ -61,7 +60,6 @@ class PostTableViewCell: UITableViewCell {
         let viewsLabel = UILabel()
         viewsLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         viewsLabel.textColor = .black
-        viewsLabel.toAutoLayout()
         return viewsLabel
     }()
     
@@ -69,7 +67,6 @@ class PostTableViewCell: UITableViewCell {
         let image = UIImage(systemName: "heart.fill")
         let heart = UIImageView(image: image)
         heart.alpha = 0
-        heart.toAutoLayout()
         return heart
     }()
     
@@ -78,13 +75,11 @@ class PostTableViewCell: UITableViewCell {
         descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         descriptionLabel.textColor = .systemGray
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.toAutoLayout()
         return descriptionLabel
     }()
     
     lazy var imagePost: UIImageView = {
         let imagePost = UIImageView()
-        imagePost.toAutoLayout()
         imagePost.backgroundColor = .black
         imagePost.contentMode = .scaleAspectFit
         return imagePost
@@ -104,41 +99,45 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func setupConstraints() {
-        let constraints = [
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            titleLabel.heightAnchor.constraint(equalToConstant: 48),
-            
-            imagePost.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-            imagePost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imagePost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imagePost.heightAnchor.constraint(equalTo: contentView.widthAnchor),
-            
-            descriptionLabel.topAnchor.constraint(equalTo: imagePost.bottomAnchor, constant: 16),
-            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            
-            likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            likesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            
-            heart.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
-            heart.centerYAnchor.constraint(equalTo: likesLabel.centerYAnchor),
-            heart.centerXAnchor.constraint(equalTo: likesLabel.centerXAnchor),
-            heart.widthAnchor.constraint(equalToConstant: 40),
-            heart.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            
-            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            viewsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
-        ]
-        NSLayoutConstraint.activate(constraints)
+        
+        titleLabel.snp.makeConstraints { make in
+            make.height.equalTo(48)
+            make.top.leading.trailing.equalToSuperview().offset(16)
+        }
+        
+        imagePost.snp.makeConstraints { make in
+            make.height.equalTo(contentView.snp.width)
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().offset(16)
+            make.top.equalTo(imagePost.snp.bottom).offset(16)
+        }
+        
+        likesLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.bottom.equalToSuperview().inset(16)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(16)
+        }
+        
+        viewsLabel.snp.makeConstraints { make in
+            make.trailing.bottom.equalToSuperview().inset(16)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(16)
+        }
+        
+        heart.snp.makeConstraints { make in
+            make.top.equalTo(descriptionLabel.snp.bottom)
+            make.bottom.equalToSuperview().inset(8)
+            make.width.equalTo(45)
+            make.centerX.equalTo(likesLabel.snp.centerX)
+        }
     }
-    
+   
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubviews(titleLabel, imagePost, descriptionLabel, likesLabel, heart, viewsLabel)
+        contentView.addSubviews(titleLabel, imagePost, descriptionLabel, likesLabel, viewsLabel, heart)
         setupConstraints()
     }
     
