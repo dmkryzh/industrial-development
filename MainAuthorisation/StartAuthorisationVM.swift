@@ -59,7 +59,7 @@ class StartAuthorisationVM {
     
 }
 
-extension StartAuthorisationVM: LoginInspectorViewModel {
+extension StartAuthorisationVM: LoginInspectorViewModelDelegate {
     
     func createUser(email: String, password: String, completion: (() -> Void)?) {
         

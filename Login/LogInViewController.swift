@@ -12,8 +12,7 @@ import Firebase
 
 class LogInViewController: UIViewController {
     
-    
-    var viewModel = LoginViewModel(loginInspector: LoginInspectorViewModelDelegate())
+    var viewModel: LoginViewModel
     
     weak var coordinator: LoginCoordinator?
     
@@ -165,7 +164,7 @@ class LogInViewController: UIViewController {
         
         let actionOk = UIAlertAction(title: "OK", style: .default) { [self] _ in
             guard let _ = alert.textFields?[0].text else { return }
-            viewModel.loginInspector?.createUser(email: alert.textFields![0].text!, password: alert.textFields![1].text!){
+            viewModel.createUser(email: alert.textFields![0].text!, password: alert.textFields![1].text!){
                 let alertCreated = UIAlertController(title: "Created", message: "Account is successefully created", preferredStyle: .alert)
                 present(alertCreated, animated: true) {
                     dismiss(animated: true, completion: nil)
@@ -277,12 +276,12 @@ class LogInViewController: UIViewController {
     
     @objc func signInLogic() {
         guard let coordinator = coordinator else { return }
-        viewModel.loginInspector?.signIn(email: login.text ?? "", password: password.text ?? "",
+        viewModel.signIn(email: login.text ?? "", password: password.text ?? "",
                                          signInCompletion: {
                                             coordinator.startProfile()
                                          },
                                          alertCompletion: { [self] in
-                                            viewModel.loginInspector?.showLoginAlert(email: login.text ?? "", password: password.text ?? "", alertHandler: { alert in
+                                            viewModel.showLoginAlert(email: login.text ?? "", password: password.text ?? "", alertHandler: { alert in
                                                                     present(alert, animated: true, completion: nil)},
                                                     successHandler: {
                                                         present(successAlert, animated: true) {
@@ -298,6 +297,15 @@ class LogInViewController: UIViewController {
     @objc func registerUser() {
         guard let coordinator = coordinator else { return }
         coordinator.navController.present(alert, animated: true, completion: nil)
+    }
+    
+    init(_ viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: ViewDidLoad

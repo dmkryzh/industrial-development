@@ -20,7 +20,8 @@ class LoginCoordinator: Coordinator {
     }
     
     func start() {
-        let vc = LogInViewController()
+        let vm = LoginViewModel()
+        let vc = LogInViewController(vm)
         vc.coordinator = self
         navController.pushViewController(vc, animated: true)
     }

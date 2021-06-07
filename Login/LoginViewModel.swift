@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseAuth
 
-protocol LoginInspectorViewModel {
+protocol LoginInspectorViewModelDelegate {
 
     func createUser(email: String, password: String, completion: (() -> Void)?)
     func signIn(email: String, password: String, signInCompletion: (() -> Void)?, alertCompletion: (() -> Void)?)
@@ -18,22 +18,7 @@ protocol LoginInspectorViewModel {
     func validatePassword(_ password: String) -> Bool
 }
 
-extension LoginInspectorViewModel {
-    func showLoginAlert(email: String, password: String, alertHandler: ((UIAlertController) -> Void)?, successHandler: (() -> Void)?, failureHandler: (()->Void)?) {
-    }
-    
-    func validateLogin(_ login: String) -> Bool {
-        return false
-    }
-    
-    func validatePassword(_ password: String) -> Bool {
-        return false
-    }
-}
-
 class LoginViewModel {
-    
-    var loginInspector: LoginInspectorViewModel?
     
     let dispatchGroup = DispatchGroup()
     
@@ -76,14 +61,9 @@ class LoginViewModel {
     
     func loginCheck(login: String?, password: String?) throws -> Bool {
         guard let login = login, let password = password else { throw AppErrors.internalError}
-        guard let loginInspector = loginInspector else { throw AppErrors.internalError}
-        guard loginInspector.validateLogin(login),
-              loginInspector.validatePassword(password) else { throw AppErrors.unauthenticated}
+        guard validateLogin(login),
+              validatePassword(password) else { throw AppErrors.unauthenticated}
         return true
-    }
-    
-    init(loginInspector: LoginInspectorViewModel) {
-        self.loginInspector = loginInspector
     }
     
     func didEnterText(login: String?, password: String?, trueCompletion: @escaping () -> Void, falseCompletion: @escaping () -> Void) {
@@ -100,7 +80,7 @@ class LoginViewModel {
 }
 
 
-class LoginInspectorViewModelDelegate: LoginInspectorViewModel {
+extension LoginViewModel: LoginInspectorViewModelDelegate {
     
     func showLoginAlert(email: String, password: String, alertHandler: ((UIAlertController) -> Void)?, successHandler: (()->Void)?, failureHandler: (()->Void)?) {
         
@@ -168,5 +148,19 @@ class LoginChecker {
         return String((0..<4).map{ _ in chars.randomElement()! })
     }()
     private init() {}
+}
+
+
+extension LoginInspectorViewModelDelegate {
+    func showLoginAlert(email: String, password: String, alertHandler: ((UIAlertController) -> Void)?, successHandler: (() -> Void)?, failureHandler: (()->Void)?) {
+    }
+    
+    func validateLogin(_ login: String) -> Bool {
+        return false
+    }
+    
+    func validatePassword(_ password: String) -> Bool {
+        return false
+    }
 }
 
