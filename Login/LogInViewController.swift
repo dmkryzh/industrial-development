@@ -233,10 +233,11 @@ class LogInViewController: UIViewController {
     // MARK: Functions
     
     @objc func brut() {
-        viewModel.brut(indicator: activityIndicator) { [self] value in
-            password.text = value
-            password.isSecureTextEntry = false
-            activityIndicator.stopAnimating()
+        viewModel.brut(indicator: activityIndicator) { [weak self] value in
+            guard let self = self else { return }
+            self.password.text = value
+            self.password.isSecureTextEntry = false
+            self.activityIndicator.stopAnimating()
         }
     }
     

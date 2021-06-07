@@ -36,7 +36,8 @@ class FavoriteViewController: UIViewController {
     
     @objc func showFilterAlert() {
         let alert = UIAlertController(title: "Enter an author name", message: nil, preferredStyle: .alert)
-        let handler = {
+        let handler = { [ weak self ] in
+            guard let self = self else { return }
             self.viewModel.author = alert.textFields?[0].text
         }
         

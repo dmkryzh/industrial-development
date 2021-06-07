@@ -21,8 +21,8 @@ class StartAuthorisationVC {
     func configureLoginAction(_ action: (() -> Void)?) -> UIAlertAction {
         
         let action = UIAlertAction(title: "Sign in", style: .default) { _ in
-            guard let _ = action else { return }
-            action!()
+            guard let action = action else { return }
+            action()
         }
         return action
     }
