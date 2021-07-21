@@ -18,6 +18,7 @@ class PhotosViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.textColor = .label
         return label
     }()
     
@@ -32,7 +33,7 @@ class PhotosViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: viewModel.collectionIdentifier)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         return collectionView
     }()
     
@@ -68,7 +69,7 @@ class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = StringsForLocale.photoGal.localaized
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubviews(collectionView, timerLabel)
         setupConstraints()
     }

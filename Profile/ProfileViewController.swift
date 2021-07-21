@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController {
         let crossConfig = UIImage.SymbolConfiguration(textStyle: .largeTitle)
         cross.image = UIImage(systemName: "xmark", withConfiguration: crossConfig)
         cross.alpha = 0
-        cross.tintColor = .white
+        cross.tintColor = .label
         cross.isUserInteractionEnabled = true
         let crossGesture = UITapGestureRecognizer(target: self, action: #selector(crossTap))
         cross.addGestureRecognizer(crossGesture)
@@ -43,7 +43,7 @@ class ProfileViewController: UIViewController {
         tableView.toAutoLayout()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .lightGray
+        tableView.backgroundColor = .systemGray
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: String(describing: PostTableViewCell.self))
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: String(describing: PhotosTableViewCell.self))
         return tableView
@@ -184,7 +184,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGray
         view.addSubviews(tableView, cross)
         setupConstraints()
     }
@@ -218,7 +218,7 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
-        footerView.backgroundColor = .lightGray
+        footerView.backgroundColor = .systemBackground
         return footerView
     }
     

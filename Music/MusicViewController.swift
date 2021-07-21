@@ -25,6 +25,7 @@ class MusicViewController: UIViewController {
         let song = UILabel()
         song.text = playerDelegate.songsList[0]
         song.font = UIFont.systemFont(ofSize: 25)
+        song.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         song.textAlignment = .center
         return song
     }()
@@ -111,7 +112,7 @@ class MusicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubviews(songLabel, stackViewPlayer, tableYouTube)
         setupConstraints()
         playerDelegate.prepareAudioPlayer()

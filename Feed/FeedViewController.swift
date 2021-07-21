@@ -13,7 +13,7 @@ class FeedViewController: UIViewController {
     let newButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(StringsForLocale.jsonSer.localaized, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.backgroundColor = .systemBlue
         button.addTarget(self, action: #selector(navigationToRandomUrl), for: .touchUpInside)
         return button
@@ -22,7 +22,7 @@ class FeedViewController: UIViewController {
     let secondNewButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(StringsForLocale.codable.localaized, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.backgroundColor = .systemRed
         button.addTarget(self, action: #selector(navigationToUrl), for: .touchUpInside)
         return button
@@ -31,7 +31,7 @@ class FeedViewController: UIViewController {
     let someNewButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(StringsForLocale.decoder.localaized, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.backgroundColor = .systemYellow
         button.addTarget(self, action: #selector(navigationToPlanetUrl), for: .touchUpInside)
         return button
@@ -40,7 +40,7 @@ class FeedViewController: UIViewController {
     let thirdNewButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(StringsForLocale.music.localaized, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.backgroundColor = .systemPink
         button.addTarget(self, action: #selector(navigationToPlayer), for: .touchUpInside)
         return button
@@ -84,7 +84,7 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGreen
+        view.backgroundColor = .systemBackground
         view.addSubview(buttonsStack)
         newConstraints()
 
