@@ -64,7 +64,7 @@ class UrlViewController: UIViewController {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.backgroundColor = .white
+        label.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .systemGray)
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
         label.contentMode = .scaleAspectFill
@@ -75,7 +75,7 @@ class UrlViewController: UIViewController {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.backgroundColor = .white
+        label.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .systemGray)
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
         label.contentMode = .scaleAspectFill
@@ -86,10 +86,11 @@ class UrlViewController: UIViewController {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.backgroundColor = .white
+        label.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .systemGray)
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
         label.contentMode = .scaleAspectFill
+        
         return label
     }()
     
@@ -97,7 +98,7 @@ class UrlViewController: UIViewController {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.backgroundColor = .white
+        label.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .systemGray)
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
         label.contentMode = .scaleAspectFill
@@ -108,7 +109,7 @@ class UrlViewController: UIViewController {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.backgroundColor = .white
+        label.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .systemGray)
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
         label.contentMode = .scaleAspectFill
@@ -122,6 +123,9 @@ class UrlViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
+        tableView.separatorColor = .separator
+        tableView.tintColor = .label
+        tableView.sectionIndexColor = .label
         return tableView
     }()
     
@@ -218,7 +222,7 @@ class UrlViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
+        view.backgroundColor = UIColor.createColor(lightMode: .systemOrange, darkMode: .systemGray6)
         title = viewModel.post.title
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
@@ -246,10 +250,10 @@ extension UrlViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        header.textLabel?.textColor = UIColor.black
+        header.textLabel?.textColor = .label
         header.textLabel?.textAlignment = .center
     }
-    
+
 }
 
 extension UrlViewController: UITableViewDataSource {
@@ -274,6 +278,7 @@ extension UrlViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         StringsForLocale.httpResidents.localaized
     }
+    
     
 }
 

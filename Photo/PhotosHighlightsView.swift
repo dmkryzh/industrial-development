@@ -13,7 +13,7 @@ class PhotosHighlightsView: UIView {
     private let title: UILabel = {
         let title = UILabel()
         title.text = StringsForLocale.profilePhotos.localaized
-        title.textColor = .black
+        title.textColor = .label
         title.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return title
     }()
@@ -21,7 +21,7 @@ class PhotosHighlightsView: UIView {
     private let arrow: UIImageView = {
         let arrowConfig = UIImage.SymbolConfiguration(textStyle: .title3)
         let arrow = UIImageView()
-        arrow.tintColor = .black
+        arrow.tintColor = .label
         arrow.image = UIImage(systemName: "arrow.forward", withConfiguration: arrowConfig)
         return arrow
     }()

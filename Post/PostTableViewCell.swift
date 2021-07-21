@@ -39,7 +39,7 @@ class PostTableViewCell: UITableViewCell {
     let titleLabel: UILabel = {
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        title.textColor = .black
+        title.textColor = .label
         title.numberOfLines = 2
         return title
     }()
@@ -54,7 +54,7 @@ class PostTableViewCell: UITableViewCell {
     lazy var likesLabel: UILabel = {
         let likesLabel = UILabel()
         likesLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        likesLabel.textColor = .black
+        likesLabel.textColor = .label
         likesLabel.isUserInteractionEnabled = true
         likesLabel.addGestureRecognizer(gesture)
         return likesLabel
@@ -63,7 +63,7 @@ class PostTableViewCell: UITableViewCell {
     let viewsLabel: UILabel = {
         let viewsLabel = UILabel()
         viewsLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        viewsLabel.textColor = .black
+        viewsLabel.textColor = .label
         return viewsLabel
     }()
     
@@ -85,7 +85,7 @@ class PostTableViewCell: UITableViewCell {
     
     lazy var imagePost: UIImageView = {
         let imagePost = UIImageView()
-        imagePost.backgroundColor = .black
+        imagePost.backgroundColor = .systemBackground
         imagePost.contentMode = .scaleAspectFit
         return imagePost
     }()

@@ -37,12 +37,13 @@ class LogInViewController: UIViewController {
         login.autocapitalizationType = .none
         login.addTarget(self, action: #selector (isFilled), for: .editingChanged)
         login.placeholder = StringsForLocale.emailOrPhone.localaized
+        login.textColor = .label
         return login
     }()
     
     let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .black
+        indicator.color = UIColor.createColor(lightMode: .black, darkMode: .white)
         return indicator
     }()
     
@@ -60,6 +61,7 @@ class LogInViewController: UIViewController {
         password.addTarget(self, action: #selector (isFilled), for: .editingChanged)
         let rightView = password.rightView?.frame.size ?? CGSize.zero
         activityIndicator.center = CGPoint(x: rightView.width / 2, y: rightView.height / 2)
+        password.textColor = .label
         return password
     }()
     
@@ -67,7 +69,7 @@ class LogInViewController: UIViewController {
         let logo = UIImageView()
         logo.image = UIImage(named: "logo")
         logo.clipsToBounds = true
-        logo.backgroundColor = .white
+        logo.backgroundColor = .systemBackground
         return logo
     }()
     
@@ -313,7 +315,7 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubviews(scrollView)
         scrollView.addSubviews(containerView)
         containerView.addSubviews(logo, stackLogPas, logInButton, hackPassword, registerButton)

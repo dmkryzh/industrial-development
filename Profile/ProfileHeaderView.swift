@@ -31,7 +31,7 @@ class ProfileHeaderView: UIView {
     lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.text = statusText
-        statusLabel.textColor = .gray
+        statusLabel.textColor = .secondaryLabel
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return statusLabel
     }()
@@ -39,7 +39,7 @@ class ProfileHeaderView: UIView {
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.text = name
-        nameLabel.textColor = .black
+        nameLabel.textColor = .label
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return nameLabel
     }()
@@ -49,8 +49,9 @@ class ProfileHeaderView: UIView {
         statusTextField.layer.cornerRadius = 12
         statusTextField.layer.borderWidth = 1
         statusTextField.layer.borderColor = UIColor.black.cgColor
-        statusTextField.backgroundColor = .white
+        statusTextField.backgroundColor = .tertiarySystemFill
         statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        statusTextField.textColor = .label
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         statusTextField.addInternalPaddings(left: 10, right: 10)
         return statusTextField
@@ -72,7 +73,7 @@ class ProfileHeaderView: UIView {
     lazy var grayView: UIView = {
         let grayView = UIView(frame: UIScreen.main.bounds)
         grayView.alpha = 0
-        grayView.backgroundColor = .lightGray
+        grayView.backgroundColor = .systemGray
         return grayView
     }()
 
