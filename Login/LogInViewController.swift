@@ -14,6 +14,8 @@ class LogInViewController: UIViewController {
     
     var viewModel: LoginViewModel
     
+    let biometric = LocalAuthorizationService()
+    
     weak var coordinator: LoginCoordinator?
     
     let scrollView: UIScrollView = {
@@ -184,6 +186,23 @@ class LogInViewController: UIViewController {
         return alert
     }()
     
+    lazy var biometricId: UIButton = {
+ 
+        let view = UIButton.init(type: .system)
+        
+        switch biometric.context.biometryType {
+        case .faceID:
+            view.setBackgroundImage(UIImage(systemName: "faceid"), for: .normal)
+        case .touchID:
+            view.setBackgroundImage(UIImage(systemName: "touchid"), for: .normal)
+        default:
+            view.setBackgroundImage(UIImage(systemName: "questionmark.square.dashed"), for: .normal)
+        }
+   
+        view.addTarget(self, action: #selector(checkBiometric), for: .touchUpInside)
+        return view
+    }()
+    
     // MARK: Constraints
     
     func setupConstraints() {
@@ -209,8 +228,14 @@ class LogInViewController: UIViewController {
             make.trailing.equalTo(containerView.snp.trailing).inset(16)
         }
         
-        logInButton.snp.makeConstraints() { make in
+        biometricId.snp.makeConstraints() { make in
             make.top.equalTo(stackLogPas.snp.bottom).offset(16)
+            make.height.width.equalTo(50)
+            make.centerX.equalTo(containerView.snp.centerX)
+        }
+        
+        logInButton.snp.makeConstraints() { make in
+            make.top.equalTo(biometricId.snp.bottom).offset(16)
             make.height.equalTo(50)
             make.leading.equalTo(containerView.snp.leading).offset(16)
             make.trailing.equalTo(containerView.snp.trailing).inset(16)
@@ -233,6 +258,15 @@ class LogInViewController: UIViewController {
     }
     
     // MARK: Functions
+    
+    @objc func checkBiometric() {
+        
+        biometric.authorizeIfPossible { [weak self] isPossible in
+            guard let self = self else { return }
+            
+            if isPossible { self.coordinator?.startProfile() }
+        }
+    }
     
     @objc func brut() {
         viewModel.brut(indicator: activityIndicator) { [weak self] value in
@@ -280,20 +314,20 @@ class LogInViewController: UIViewController {
     @objc func signInLogic() {
         guard let coordinator = coordinator else { return }
         viewModel.signIn(email: login.text ?? "", password: password.text ?? "",
-                                         signInCompletion: {
-                                            coordinator.startProfile()
-                                         },
-                                         alertCompletion: { [self] in
-                                            viewModel.showLoginAlert(email: login.text ?? "", password: password.text ?? "", alertHandler: { alert in
-                                                                    present(alert, animated: true, completion: nil)},
-                                                    successHandler: {
+                         signInCompletion: {
+                            coordinator.startProfile()
+                         },
+                         alertCompletion: { [self] in
+                            viewModel.showLoginAlert(email: login.text ?? "", password: password.text ?? "", alertHandler: { alert in
+                                                        present(alert, animated: true, completion: nil)},
+                                                     successHandler: {
                                                         present(successAlert, animated: true) {
                                                             sleep(1)
                                                             dismiss(animated: true)
                                                         }
-                                                    },
-                                                    failureHandler: nil)
-                                         } )
+                                                     },
+                                                     failureHandler: nil)
+                         } )
     }
     
     
@@ -318,7 +352,7 @@ class LogInViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubviews(scrollView)
         scrollView.addSubviews(containerView)
-        containerView.addSubviews(logo, stackLogPas, logInButton, hackPassword, registerButton)
+        containerView.addSubviews(logo, stackLogPas, biometricId, logInButton, hackPassword, registerButton)
         setupConstraints()
         print("пароль: \(LoginChecker.shared.password)")
     }

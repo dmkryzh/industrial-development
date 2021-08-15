@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreData
+import LocalAuthentication
 
 extension UIView {
     func toAutoLayout() {
