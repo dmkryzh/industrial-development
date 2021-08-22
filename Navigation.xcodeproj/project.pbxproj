@@ -24,6 +24,11 @@
 		5030D443265E9B440083A9E9 /* FavoriteVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5030D442265E9B440083A9E9 /* FavoriteVM.swift */; };
 		5030D445265E9CBB0083A9E9 /* FavoriteCoordrinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5030D444265E9CBB0083A9E9 /* FavoriteCoordrinator.swift */; };
 		5030D447265E9F1B0083A9E9 /* Queen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5030D446265E9F1B0083A9E9 /* Queen.mp3 */; };
+		503F026826D1925800608DEA /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F026726D1925800608DEA /* LocalNotificationsService.swift */; };
+		503F026A26D23B5100608DEA /* Alpha.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 503F026926D23B5100608DEA /* Alpha.mp3 */; };
+		503F026C26D23B5800608DEA /* Electric.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 503F026B26D23B5800608DEA /* Electric.mp3 */; };
+		503F026E26D23B5E00608DEA /* Guano.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 503F026D26D23B5E00608DEA /* Guano.mp3 */; };
+		503F027026D23B6300608DEA /* Master.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 503F026F26D23B6300608DEA /* Master.mp3 */; };
 		504244C426613333000EC5C5 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 504244C226613333000EC5C5 /* CoreDataModel.xcdatamodeld */; };
 		504244D72662A2BF000EC5C5 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504244D62662A2BF000EC5C5 /* CoreDataStack.swift */; };
 		504244E22662D7F9000EC5C5 /* PostStorage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504244E02662D7F9000EC5C5 /* PostStorage+CoreDataClass.swift */; };
@@ -48,10 +53,6 @@
 		50BAA7CD263F41FC0017F418 /* PhotosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAA7CC263F41FC0017F418 /* PhotosViewModel.swift */; };
 		50BAA7D02643125A0017F418 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAA7CF2643125A0017F418 /* NetworkService.swift */; };
 		50E780172628C53700F49E1B /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E780162628C53700F49E1B /* MusicViewController.swift */; };
-		50E7801F2628D82C00F49E1B /* Master.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50E7801E2628D82C00F49E1B /* Master.mp3 */; };
-		50E780252629B3B000F49E1B /* Electric.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50E780242629B3B000F49E1B /* Electric.mp3 */; };
-		50E780282629B49300F49E1B /* Guano.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50E780272629B49200F49E1B /* Guano.mp3 */; };
-		50E7802B2629B49B00F49E1B /* Alpha.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50E7802A2629B49B00F49E1B /* Alpha.mp3 */; };
 		50E7802E2629E15700F49E1B /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7802D2629E15700F49E1B /* WebView.swift */; };
 		96A4A83F6B80C59A83237DDA /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71452D49513A071150B40130 /* Pods_Navigation.framework */; };
 		E225171A25BDEC3200936CA5 /* PhotosHighlightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225171925BDEC3200936CA5 /* PhotosHighlightsView.swift */; };
@@ -85,6 +86,11 @@
 		5030D442265E9B440083A9E9 /* FavoriteVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteVM.swift; sourceTree = "<group>"; };
 		5030D444265E9CBB0083A9E9 /* FavoriteCoordrinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCoordrinator.swift; sourceTree = "<group>"; };
 		5030D446265E9F1B0083A9E9 /* Queen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Queen.mp3; sourceTree = "<group>"; };
+		503F026726D1925800608DEA /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
+		503F026926D23B5100608DEA /* Alpha.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Alpha.mp3; sourceTree = "<group>"; };
+		503F026B26D23B5800608DEA /* Electric.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Electric.mp3; sourceTree = "<group>"; };
+		503F026D26D23B5E00608DEA /* Guano.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Guano.mp3; sourceTree = "<group>"; };
+		503F026F26D23B6300608DEA /* Master.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Master.mp3; sourceTree = "<group>"; };
 		504244C326613333000EC5C5 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		504244D62662A2BF000EC5C5 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		504244E02662D7F9000EC5C5 /* PostStorage+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostStorage+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -112,10 +118,6 @@
 		50BAA7CC263F41FC0017F418 /* PhotosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModel.swift; sourceTree = "<group>"; };
 		50BAA7CF2643125A0017F418 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		50E780162628C53700F49E1B /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
-		50E7801E2628D82C00F49E1B /* Master.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Master.mp3; path = ../../../../../../Downloads/Master.mp3; sourceTree = "<group>"; };
-		50E780242629B3B000F49E1B /* Electric.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Electric.mp3; path = ../../../../../../Downloads/Electric.mp3; sourceTree = "<group>"; };
-		50E780272629B49200F49E1B /* Guano.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Guano.mp3; path = ../../../../../../Downloads/Guano.mp3; sourceTree = "<group>"; };
-		50E7802A2629B49B00F49E1B /* Alpha.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Alpha.mp3; path = ../../../../../../Downloads/Alpha.mp3; sourceTree = "<group>"; };
 		50E7802D2629E15700F49E1B /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		54B96D5774A4F3DE4ADFC0C4 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
 		71452D49513A071150B40130 /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +158,7 @@
 				060782B1250CE27700A87020 /* AppDelegate.swift */,
 				060782B3250CE27700A87020 /* SceneDelegate.swift */,
 				50148845264FDC0400E73F5F /* GenericExtentions.swift */,
+				503F026726D1925800608DEA /* LocalNotificationsService.swift */,
 				504244C5266137ED000EC5C5 /* CoreData */,
 				5030D43F265E9B1D0083A9E9 /* Favorite */,
 				50BAA7CE2643123C0017F418 /* Network */,
@@ -286,11 +289,11 @@
 		50E780152628C47200F49E1B /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				50E780242629B3B000F49E1B /* Electric.mp3 */,
-				50E7802A2629B49B00F49E1B /* Alpha.mp3 */,
+				503F026B26D23B5800608DEA /* Electric.mp3 */,
+				503F026F26D23B6300608DEA /* Master.mp3 */,
+				503F026D26D23B5E00608DEA /* Guano.mp3 */,
+				503F026926D23B5100608DEA /* Alpha.mp3 */,
 				5030D446265E9F1B0083A9E9 /* Queen.mp3 */,
-				50E780272629B49200F49E1B /* Guano.mp3 */,
-				50E7801E2628D82C00F49E1B /* Master.mp3 */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -398,16 +401,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50E780252629B3B000F49E1B /* Electric.mp3 in Resources */,
 				5081E86526A3662D00680E81 /* Localazible.stringsdict in Resources */,
+				503F026E26D23B5E00608DEA /* Guano.mp3 in Resources */,
 				501488482651074000E73F5F /* GoogleService-Info.plist in Resources */,
-				50E780282629B49300F49E1B /* Guano.mp3 in Resources */,
 				060782BE250CE27A00A87020 /* LaunchScreen.storyboard in Resources */,
+				503F027026D23B6300608DEA /* Master.mp3 in Resources */,
 				5081E85C26A2DDE400680E81 /* Localizable.strings in Resources */,
-				50E7802B2629B49B00F49E1B /* Alpha.mp3 in Resources */,
+				503F026A26D23B5100608DEA /* Alpha.mp3 in Resources */,
+				503F026C26D23B5800608DEA /* Electric.mp3 in Resources */,
 				5030D447265E9F1B0083A9E9 /* Queen.mp3 in Resources */,
 				060782BB250CE27A00A87020 /* Assets.xcassets in Resources */,
-				50E7801F2628D82C00F49E1B /* Master.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +481,7 @@
 				505EDD4D260A834B00319C7A /* ProfileViewModel.swift in Sources */,
 				504244C426613333000EC5C5 /* CoreDataModel.xcdatamodeld in Sources */,
 				E25052AD25B33F4700201617 /* LogInViewController.swift in Sources */,
+				503F026826D1925800608DEA /* LocalNotificationsService.swift in Sources */,
 				505D1932265B9E95007D4FA1 /* StartAuthorisationVC.swift in Sources */,
 				5030D443265E9B440083A9E9 /* FavoriteVM.swift in Sources */,
 				060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */,
