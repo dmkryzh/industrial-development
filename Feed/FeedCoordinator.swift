@@ -12,7 +12,7 @@ class FeedCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
     var navController: UINavigationController
-    var post: Post = Post(title: "Пост", author: nil, description: nil, imageName: nil, likes: nil, views: nil)
+    var post: Post = Post(title: "Пост", author: nil, description: nil, imageName: nil, imagePic: nil, likes: nil, views: nil)
 
     init(navigation: UINavigationController) {
         navController = navigation

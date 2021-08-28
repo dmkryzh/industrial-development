@@ -13,7 +13,7 @@ class PostTableViewCell: UITableViewCell {
     var post: Post? {
         didSet {
             titleLabel.text = post?.title
-            imagePost.image = UIImage(named: (post?.imageName ?? "default"))
+            imagePost.image = post?.imagePic
             if let likesCount = Int((post?.likes)!) {
                 likesLabel.text = ("\(String.localizedStringWithFormat(StringsForLocale.profileLikes.localaized, likesCount)): \(post?.likes ?? "")")
             } else {
@@ -27,7 +27,7 @@ class PostTableViewCell: UITableViewCell {
     var savedPost: PostStorage? {
         didSet {
             titleLabel.text = savedPost?.title
-            imagePost.image = UIImage(named: (savedPost?.image ?? "default"))
+            imagePost.image = UIImage(named: savedPost?.image ?? "")
             likesLabel.text = ("Likes: \(savedPost!.likes)")
             viewsLabel.text = ("Views: \(savedPost!.views)")
             descriptionLabel.text = savedPost?.postDescription

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MobileCoreServices
 
 class ProfileViewController: UIViewController {
     
@@ -46,6 +47,9 @@ class ProfileViewController: UIViewController {
         tableView.backgroundColor = .systemGray
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: String(describing: PostTableViewCell.self))
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: String(describing: PhotosTableViewCell.self))
+        tableView.dragInteractionEnabled = true
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
         return tableView
     }()
     
@@ -194,7 +198,7 @@ class ProfileViewController: UIViewController {
         if !someState {
             didRotationChange()
         }
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -206,7 +210,7 @@ class ProfileViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
-
+    
 }
 
 // MARK: UITableViewDelegate
@@ -246,7 +250,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return 1
         case 1:
-            return PostItems.tableStruct.count
+            return PostItems.shared.tableStruct.count
         default:
             return .zero
         }
@@ -261,11 +265,11 @@ extension ProfileViewController: UITableViewDataSource {
             return cellFromPhoto
         case 1:
             let cellFromPost: PostTableViewCell = tableView.dequeueReusableCell(withIdentifier: String(describing: PostTableViewCell.self), for: indexPath) as! PostTableViewCell
-            cellFromPost.post = PostItems.tableStruct[indexPath.row]
+            cellFromPost.post = PostItems.shared.tableStruct[indexPath.row]
             cellFromPost.likesLabel.isUserInteractionEnabled = true
             cellFromPost.selectionStyle = .none
             cellFromPost.onSaveLikedPostTap = { [weak self] in
-                self?.viewModel.saveLikedPost(PostItems.tableStruct[indexPath.row])
+                self?.viewModel.saveLikedPost(PostItems.shared.tableStruct[indexPath.row])
             }
             return cellFromPost
         default:
@@ -273,3 +277,53 @@ extension ProfileViewController: UITableViewDataSource {
         }
     }
 }
+
+extension ProfileViewController: UITableViewDragDelegate, UITableViewDropDelegate {
+    
+        func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+            if let itemCell = tableView.cellForRow(at: indexPath) as? PostTableViewCell,
+               let image = itemCell.imagePost.image,
+               let description = itemCell.descriptionLabel.text
+            {
+                let dragImage = UIDragItem(itemProvider: NSItemProvider(object: image))
+                let dragString = UIDragItem(itemProvider: NSItemProvider(object: description as NSString))
+                return [dragImage, dragString]
+            } else {
+                return []
+            }
+        }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+
+        var description: String?
+        var image: UIImage?
+
+        coordinator.session.loadObjects(ofClass: NSString.self) { items in
+            let stringItems = items as! [String]
+            description = stringItems.first
+        }
+
+        coordinator.session.loadObjects(ofClass: UIImage.self) { (items) in
+            let imageItems = items as! [UIImage]
+            image = imageItems.first
+        }
+
+        let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
+
+        PostItems.shared.addPost(draggedPost)
+
+        tableView.reloadData()
+    }
+
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        UITableViewDropProposal(operation: UIDropOperation.copy, intent: .automatic)
+    }
+
+
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSString.self) && session.canLoadObjects(ofClass: UIImage.self)
+    }
+    
+    
+}
+
