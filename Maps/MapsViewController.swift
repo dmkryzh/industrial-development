@@ -28,33 +28,15 @@ class MapsViewController: UIViewController {
         return map
     }()
     
-    
-//    lazy var searchBar: UISearchBar = {
-//        let view = UISearchBar()
-//        view.placeholder = "Type text"
-//        view.layer.cornerRadius = 5
-//        view.layer.borderWidth = 1
-//        view.barStyle = .default
-//        view.delegate = self
-//        return view
-//    }()
-    
     lazy var searchBar: UITextField = {
         let view = UITextField()
         view.textColor = .black
-        view.textInputView.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading).offset(50)
-        }
-        view.font = UIFont.systemFont(ofSize: 14)
-        view.autocapitalizationType = .none
         view.tintColor = UIColor.init(named: "accentColor")
         view.layer.borderWidth = 0.5
         view.addInternalPaddings(left: 10, right: 10)
         view.autocapitalizationType = .none
         view.backgroundColor = .white
-//        login.addTarget(self, action: #selector (isFilled), for: .editingChanged)
         view.placeholder = "Search"
-        view.textColor = .label
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 5
         view.leftView = searchBtn
@@ -69,7 +51,7 @@ class MapsViewController: UIViewController {
         let view = UIButton(type: .system)
         view.setImage(image, for: .normal)
         view.backgroundColor = .white
-//        view.addTarget(self, action: #selector(getCurrentLocation), for: .touchUpInside)
+        view.addTarget(self, action: #selector(getLocationFromSearchBar), for: .touchUpInside)
         return view
     }()
     
@@ -131,8 +113,9 @@ class MapsViewController: UIViewController {
         setCurrentLocationAction()
     }
     
-    @objc func getLocationFromSearchBar(_ input: String) {
-        updatePlaceMark(to: input)
+    @objc func getLocationFromSearchBar() {
+        updatePlaceMark(to: searchBar.text ?? "")
+        searchBar.text = nil
     }
     
     func setupConstraints() {
