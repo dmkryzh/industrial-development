@@ -50,7 +50,7 @@ class LocalNotificationsService: NSObject {
         dateComponents.hour = 23
         dateComponents.minute = 31
         
-        let triggerInterval = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false)
+        _ = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false)
         
         let triggerScheduled = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         

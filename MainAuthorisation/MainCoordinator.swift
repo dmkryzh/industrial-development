@@ -23,8 +23,9 @@ class MainCoordinator: Coordinator  {
         let feedFlow = prepareFeedFlow()
         let loginFlow = prepareLoginFlow()
         let favoriteFlow = prepareFavoriteFlow()
+        let mapsFlow = prepareMapsFlow()
         
-        rootViewController.viewControllers = [feedFlow, loginFlow, favoriteFlow]
+        rootViewController.viewControllers = [feedFlow, loginFlow, favoriteFlow, mapsFlow]
         
         let feedCoordinator = FeedCoordinator(navigation: feedFlow)
         feedCoordinator.start()
@@ -32,7 +33,9 @@ class MainCoordinator: Coordinator  {
         loginCoordinator.start()
         let favoriteCoordinator = FavoriteCoordrinator(navigation: favoriteFlow, coreData: coreData)
         favoriteCoordinator.start()
-        childCoordinators = [feedCoordinator, loginCoordinator, favoriteCoordinator]
+        let mapsCoordinator = MapsCoordinator(navigation: mapsFlow)
+        mapsCoordinator.start()
+        childCoordinators = [feedCoordinator, loginCoordinator, favoriteCoordinator, mapsCoordinator]
     }
     
     func prepareFeedFlow() -> UINavigationController {
@@ -55,6 +58,14 @@ class MainCoordinator: Coordinator  {
         let favoriteItem = makeTabBarItem(image: UIImage(systemName: "heart"), title: StringsForLocale.tabFavorite.localaized)
         favoriteNav.tabBarItem = favoriteItem
         return favoriteNav
+        
+    }
+    
+    func prepareMapsFlow() -> UINavigationController {
+        let mapsNav = UINavigationController()
+        let mapsItem = makeTabBarItem(image: UIImage(systemName: "map"), title: StringsForLocale.maps.localaized)
+        mapsNav.tabBarItem = mapsItem
+        return mapsNav
         
     }
 }
