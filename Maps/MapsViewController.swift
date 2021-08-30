@@ -74,8 +74,54 @@ class MapsViewController: UIViewController {
         let view = UIButton(type: .system)
         view.setImage(image, for: .normal)
         view.backgroundColor = .white
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 5
         view.addTarget(self, action: #selector(calculateRoute), for: .touchUpInside)
         return view
+    }()
+    
+    private let removePins: UIButton = {
+        let image = UIImage(systemName: "xmark.circle")
+        let view = UIButton(type: .system)
+        view.setImage(image, for: .normal)
+        view.backgroundColor = .white
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 5
+        view.addTarget(self, action: #selector(removeAnnotation), for: .touchUpInside)
+        return view
+    }()
+    
+    private let zoomIn: UIButton = {
+        let image = UIImage(systemName: "plus.magnifyingglass")
+        let view = UIButton(type: .system)
+        view.setImage(image, for: .normal)
+        view.backgroundColor = .white
+        view.layer.borderWidth = 1
+//        view.layer.cornerRadius = 5
+        view.addTarget(self, action: #selector(zoomInAction), for: .touchUpInside)
+        return view
+    }()
+    
+    private let zoomOut: UIButton = {
+        let image = UIImage(systemName: "minus.magnifyingglass")
+        let view = UIButton(type: .system)
+        view.setImage(image, for: .normal)
+        view.backgroundColor = .white
+        view.addTarget(self, action: #selector(zoomOutAction), for: .touchUpInside)
+        return view
+    }()
+    
+    lazy var stackZoom: UIStackView = {
+        let stackLogPas = UIStackView(arrangedSubviews: [zoomIn, zoomOut])
+        stackLogPas.alignment = .fill
+        stackLogPas.distribution = .fillEqually
+        stackLogPas.axis = .vertical
+        stackLogPas.spacing = 0
+        stackLogPas.layer.cornerRadius = 3
+        stackLogPas.layer.borderWidth = 1
+        stackLogPas.layer.masksToBounds = true
+        stackLogPas.backgroundColor = .white
+        return stackLogPas
     }()
     
     private var pointsCounter = 0
@@ -84,9 +130,10 @@ class MapsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubviews(mapView, searchBar, myLocationBtn, searchRoute)
+        view.addSubviews(mapView, searchBar, myLocationBtn, searchRoute, removePins, stackZoom)
         requestAccessToGeo()
         setupConstraints()
+        title = "Карты"
     }
     
     // MARK: Constraints
@@ -113,6 +160,19 @@ class MapsViewController: UIViewController {
             make.top.equalTo(myLocationBtn.snp.bottom).offset(20)
             make.trailing.equalToSuperview().inset(30)
         }
+        
+        removePins.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.top.equalTo(searchRoute.snp.bottom).offset(20)
+            make.trailing.equalToSuperview().inset(30)
+        }
+        
+        stackZoom.snp.makeConstraints { make in
+            make.width.equalTo(30)
+            make.height.equalTo(60)
+            make.top.equalTo(removePins.snp.bottom).offset(30)
+            make.centerX.equalTo(removePins.snp.centerX)
+        }
     }
     
     
@@ -120,6 +180,31 @@ class MapsViewController: UIViewController {
     @objc func calculateRoute() {
         guard locations.count == 2 else { return }
         showRouteOnMap(pickupCoordinate: locations.first!, destinationCoordinate: locations.last!)
+    }
+    
+    @objc func zoomInAction() {
+        var region: MKCoordinateRegion = self.mapView.region
+        var span: MKCoordinateSpan = mapView.region.span
+          span.latitudeDelta /= 2
+          span.longitudeDelta /= 2
+          region.span = span
+          mapView.setRegion(region, animated: true)
+    }
+    
+    @objc func zoomOutAction() {
+        var region: MKCoordinateRegion = self.mapView.region
+        var span: MKCoordinateSpan = mapView.region.span
+          span.latitudeDelta *= 2
+          span.longitudeDelta *= 2
+          region.span = span
+          mapView.setRegion(region, animated: true)
+    }
+    
+    @objc func removeAnnotation() {
+        let annotations = mapView.annotations.filter({ !($0 is MKUserLocation) })
+        mapView.removeAnnotations(annotations)
+        mapView.removeOverlays(mapView.overlays)
+        locations = []
     }
     
     @objc func pinLocation(gestureRecognizer: UILongPressGestureRecognizer) {
@@ -133,6 +218,7 @@ class MapsViewController: UIViewController {
             annotation.coordinate = touchCoordinates
             annotation.title = "Точка № \(pointsCounter += 1)"
             annotation.subtitle = "Новая точка на карте"
+            
             self.mapView.addAnnotation(annotation)
             locations.append(touchCoordinates)
         }
@@ -182,6 +268,7 @@ class MapsViewController: UIViewController {
         currentLocation.lookUpLocationName { (name) in
             self.updateLocationOnMap(to: currentLocation, with: name)
         }
+        locations.append(currentLocation.coordinate)
     }
     
     private func updateLocationOnMap(to location: CLLocation, with title: String?) {
@@ -303,6 +390,8 @@ extension MapsViewController: MKMapViewDelegate {
         return render
     }
     
+    
 }
+
 
 
