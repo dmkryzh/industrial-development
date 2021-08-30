@@ -33,6 +33,8 @@
 		504244D72662A2BF000EC5C5 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504244D62662A2BF000EC5C5 /* CoreDataStack.swift */; };
 		504244E22662D7F9000EC5C5 /* PostStorage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504244E02662D7F9000EC5C5 /* PostStorage+CoreDataClass.swift */; };
 		504244E32662D7F9000EC5C5 /* PostStorage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504244E12662D7F9000EC5C5 /* PostStorage+CoreDataProperties.swift */; };
+		50441F8526DB52C800029FF0 /* MapsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50441F8426DB52C800029FF0 /* MapsCoordinator.swift */; };
+		50441F8726DB531000029FF0 /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50441F8626DB531000029FF0 /* MapsViewController.swift */; };
 		505D1932265B9E95007D4FA1 /* StartAuthorisationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D1931265B9E95007D4FA1 /* StartAuthorisationVC.swift */; };
 		505D1934265B9EB2007D4FA1 /* StartAuthorisationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */; };
 		505D1936265BC040007D4FA1 /* MainLoginDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D1935265BC040007D4FA1 /* MainLoginDB.swift */; };
@@ -96,6 +98,8 @@
 		504244E02662D7F9000EC5C5 /* PostStorage+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostStorage+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		504244E12662D7F9000EC5C5 /* PostStorage+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostStorage+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		50441F8126DAB52B00029FF0 /* CoreDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CoreDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		50441F8426DB52C800029FF0 /* MapsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsCoordinator.swift; sourceTree = "<group>"; };
+		50441F8626DB531000029FF0 /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
 		505D1931265B9E95007D4FA1 /* StartAuthorisationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAuthorisationVC.swift; sourceTree = "<group>"; };
 		505D1933265B9EB2007D4FA1 /* StartAuthorisationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAuthorisationVM.swift; sourceTree = "<group>"; };
 		505D1935265BC040007D4FA1 /* MainLoginDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginDB.swift; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 				060782B3250CE27700A87020 /* SceneDelegate.swift */,
 				50148845264FDC0400E73F5F /* GenericExtentions.swift */,
 				503F026726D1925800608DEA /* LocalNotificationsService.swift */,
+				50441F8326DB52B300029FF0 /* Maps */,
 				504244C5266137ED000EC5C5 /* CoreData */,
 				5030D43F265E9B1D0083A9E9 /* Favorite */,
 				50BAA7CE2643123C0017F418 /* Network */,
@@ -235,6 +240,15 @@
 				506C5E762647D96C00EF7870 /* UrlDataModel.swift */,
 			);
 			path = URLRequest;
+			sourceTree = "<group>";
+		};
+		50441F8326DB52B300029FF0 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				50441F8426DB52C800029FF0 /* MapsCoordinator.swift */,
+				50441F8626DB531000029FF0 /* MapsViewController.swift */,
+			);
+			path = Maps;
 			sourceTree = "<group>";
 		};
 		505D1930265B9E63007D4FA1 /* MainAuthorisation */ = {
@@ -467,6 +481,7 @@
 				505D1936265BC040007D4FA1 /* MainLoginDB.swift in Sources */,
 				50148842264DAFF600E73F5F /* UrlViewModel.swift in Sources */,
 				505EDD4326092BC300319C7A /* FeedCoordinator.swift in Sources */,
+				50441F8726DB531000029FF0 /* MapsViewController.swift in Sources */,
 				504244E22662D7F9000EC5C5 /* PostStorage+CoreDataClass.swift in Sources */,
 				505EDD4626092C0100319C7A /* ProfileCoordinator.swift in Sources */,
 				E27CC2DC25B9EFBF008C4C11 /* ProfileHeaderView.swift in Sources */,
@@ -486,6 +501,7 @@
 				505D1932265B9E95007D4FA1 /* StartAuthorisationVC.swift in Sources */,
 				5030D443265E9B440083A9E9 /* FavoriteVM.swift in Sources */,
 				060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */,
+				50441F8526DB52C800029FF0 /* MapsCoordinator.swift in Sources */,
 				060782CA250CEE7200A87020 /* PostDataModel.swift in Sources */,
 				5079DAE32636DE1D00136C52 /* AudioPlayer.swift in Sources */,
 				504244E32662D7F9000EC5C5 /* PostStorage+CoreDataProperties.swift in Sources */,

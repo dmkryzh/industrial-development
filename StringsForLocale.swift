@@ -50,6 +50,7 @@ enum StringsForLocale: String {
     case cancel = "CANCEL"
     case author = "AUTHOR"
     case wait = "WAIT"
+    case maps = "MAPS"
     
     var localaized: String {
         return NSLocalizedString(rawValue, comment: "")
