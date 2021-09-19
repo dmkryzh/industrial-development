@@ -12,6 +12,7 @@ import MobileCoreServices
 class ProfileViewController: UIViewController {
     
     weak var coordinator: ProfileCoordinator?
+    
     var viewModel: ProfileViewModel
     
     var someState = true
@@ -38,7 +39,6 @@ class ProfileViewController: UIViewController {
         return cross
     }()
     
-    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.toAutoLayout()
@@ -56,6 +56,7 @@ class ProfileViewController: UIViewController {
     //MARK: Анимация - start
     
     var avaPostition = UIView()
+    
     var grayBackground = UIView()
     
     func animateCross(_ state: Bool, _ completion: ((Bool)->Void)? = nil) {
@@ -159,8 +160,6 @@ class ProfileViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-    
-    
     
     //MARK: Constraints
     
@@ -280,50 +279,49 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDragDelegate, UITableViewDropDelegate {
     
-        func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-            if let itemCell = tableView.cellForRow(at: indexPath) as? PostTableViewCell,
-               let image = itemCell.imagePost.image,
-               let description = itemCell.descriptionLabel.text
-            {
-                let dragImage = UIDragItem(itemProvider: NSItemProvider(object: image))
-                let dragString = UIDragItem(itemProvider: NSItemProvider(object: description as NSString))
-                return [dragImage, dragString]
-            } else {
-                return []
-            }
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        if let itemCell = tableView.cellForRow(at: indexPath) as? PostTableViewCell,
+           let image = itemCell.imagePost.image,
+           let description = itemCell.descriptionLabel.text
+        {
+            let dragImage = UIDragItem(itemProvider: NSItemProvider(object: image))
+            let dragString = UIDragItem(itemProvider: NSItemProvider(object: description as NSString))
+            return [dragImage, dragString]
+        } else {
+            return []
         }
+    }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-
+        
         var description: String?
         var image: UIImage?
-
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
         coordinator.session.loadObjects(ofClass: NSString.self) { items in
             let stringItems = items as! [String]
             description = stringItems.first
         }
-
         coordinator.session.loadObjects(ofClass: UIImage.self) { (items) in
             let imageItems = items as! [UIImage]
             image = imageItems.first
+            dispatchGroup.leave()
         }
-
-        let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
-
-        PostItems.shared.addPost(draggedPost)
-
-        tableView.reloadData()
+        
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
+            PostItems.shared.addPost(draggedPost)
+            tableView.reloadData()
+        }
     }
-
+    
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         UITableViewDropProposal(operation: UIDropOperation.copy, intent: .automatic)
     }
-
-
+    
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self) && session.canLoadObjects(ofClass: UIImage.self)
     }
-    
-    
 }
 
