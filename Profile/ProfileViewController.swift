@@ -12,13 +12,10 @@ import MobileCoreServices
 class ProfileViewController: UIViewController {
     
     weak var coordinator: ProfileCoordinator?
+    
     var viewModel: ProfileViewModel
     
     var someState = true
-    
-    var tempImage: UIImage?
-    
-    var tempDescription: String?
     
     lazy var header: ProfileHeaderView = {
         let header = ProfileHeaderView()
@@ -42,7 +39,6 @@ class ProfileViewController: UIViewController {
         return cross
     }()
     
-    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.toAutoLayout()
@@ -60,6 +56,7 @@ class ProfileViewController: UIViewController {
     //MARK: Анимация - start
     
     var avaPostition = UIView()
+    
     var grayBackground = UIView()
     
     func animateCross(_ state: Bool, _ completion: ((Bool)->Void)? = nil) {
@@ -163,27 +160,6 @@ class ProfileViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-    
-    func useDraggedData(image: UIImage?, description: String?) {
-            
-            if let image = image {
-                self.tempImage = image
-            }
-            
-            if let description = description {
-                
-                self.tempDescription = description
-            }
-            
-            if let image = tempImage, let description = tempDescription {
-                
-                let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
-
-                        PostItems.shared.addPost(draggedPost)
-
-                        tableView.reloadData()
-            }
-        }
     
     //MARK: Constraints
     
@@ -320,34 +296,32 @@ extension ProfileViewController: UITableViewDragDelegate, UITableViewDropDelegat
         
         var description: String?
         var image: UIImage?
+        let dispatchGroup = DispatchGroup()
         
+        dispatchGroup.enter()
         coordinator.session.loadObjects(ofClass: NSString.self) { items in
             let stringItems = items as! [String]
             description = stringItems.first
         }
-        
         coordinator.session.loadObjects(ofClass: UIImage.self) { (items) in
             let imageItems = items as! [UIImage]
             image = imageItems.first
+            dispatchGroup.leave()
         }
         
-//        let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
-//
-//        PostItems.shared.addPost(draggedPost)
-//
-//        tableView.reloadData()
-        useDraggedData(image: image, description: description)
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
+            PostItems.shared.addPost(draggedPost)
+            tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         UITableViewDropProposal(operation: UIDropOperation.copy, intent: .automatic)
     }
     
-    
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self) && session.canLoadObjects(ofClass: UIImage.self)
     }
-    
-    
 }
 
