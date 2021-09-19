@@ -16,6 +16,10 @@ class ProfileViewController: UIViewController {
     
     var someState = true
     
+    var tempImage: UIImage?
+    
+    var tempDescription: String?
+    
     lazy var header: ProfileHeaderView = {
         let header = ProfileHeaderView()
         let gesture = UITapGestureRecognizer(target: self, action: #selector(avaTap))
@@ -160,7 +164,26 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    
+    func useDraggedData(image: UIImage?, description: String?) {
+            
+            if let image = image {
+                self.tempImage = image
+            }
+            
+            if let description = description {
+                
+                self.tempDescription = description
+            }
+            
+            if let image = tempImage, let description = tempDescription {
+                
+                let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
+
+                        PostItems.shared.addPost(draggedPost)
+
+                        tableView.reloadData()
+            }
+        }
     
     //MARK: Constraints
     
@@ -280,46 +303,47 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDragDelegate, UITableViewDropDelegate {
     
-        func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-            if let itemCell = tableView.cellForRow(at: indexPath) as? PostTableViewCell,
-               let image = itemCell.imagePost.image,
-               let description = itemCell.descriptionLabel.text
-            {
-                let dragImage = UIDragItem(itemProvider: NSItemProvider(object: image))
-                let dragString = UIDragItem(itemProvider: NSItemProvider(object: description as NSString))
-                return [dragImage, dragString]
-            } else {
-                return []
-            }
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        if let itemCell = tableView.cellForRow(at: indexPath) as? PostTableViewCell,
+           let image = itemCell.imagePost.image,
+           let description = itemCell.descriptionLabel.text
+        {
+            let dragImage = UIDragItem(itemProvider: NSItemProvider(object: image))
+            let dragString = UIDragItem(itemProvider: NSItemProvider(object: description as NSString))
+            return [dragImage, dragString]
+        } else {
+            return []
         }
+    }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-
+        
         var description: String?
         var image: UIImage?
-
+        
         coordinator.session.loadObjects(ofClass: NSString.self) { items in
             let stringItems = items as! [String]
             description = stringItems.first
         }
-
+        
         coordinator.session.loadObjects(ofClass: UIImage.self) { (items) in
             let imageItems = items as! [UIImage]
             image = imageItems.first
         }
-
-        let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
-
-        PostItems.shared.addPost(draggedPost)
-
-        tableView.reloadData()
+        
+//        let draggedPost = Post(title: "Drag&Drop", author: "Drag&Drop", description: description, imageName: "", imagePic: image, likes: "0", views: "0")
+//
+//        PostItems.shared.addPost(draggedPost)
+//
+//        tableView.reloadData()
+        useDraggedData(image: image, description: description)
     }
-
+    
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         UITableViewDropProposal(operation: UIDropOperation.copy, intent: .automatic)
     }
-
-
+    
+    
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self) && session.canLoadObjects(ofClass: UIImage.self)
     }
